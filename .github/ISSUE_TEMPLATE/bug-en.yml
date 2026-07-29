@@ -1,0 +1,59 @@
+name: 🐛 Bug Report (English)
+description: Something isn't working? Tell me how to reproduce it.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please be as specific as you can.
+        ⚠️ **Never paste your API key here.**
+  - type: input
+    id: version
+    attributes:
+      label: App version
+      description: Shown at the bottom of the app, e.g. V6.3
+      placeholder: V6.3
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which feature
+      options:
+        - AI Chat
+        - Image generation
+        - Video generation
+        - Knowledge base
+        - Skills
+        - History / Projects
+        - Settings / Backup
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What went wrong
+      description: What you expected, and what actually happened
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open ...
+        2. Click ...
+        3. See ...
+    validations:
+      required: true
+  - type: textarea
+    id: shot
+    attributes:
+      label: Screenshot (highly recommended)
+      description: Drag an image straight into this box. Include any error text.
+  - type: input
+    id: os
+    attributes:
+      label: OS version
+      placeholder: Windows 11 24H2

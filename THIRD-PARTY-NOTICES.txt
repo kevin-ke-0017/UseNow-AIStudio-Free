@@ -1,0 +1,147 @@
+即用AI工作台 UseNow AI Studio —— 第三方开源软件许可声明
+THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
+
+本产品为专有软件，版权归开发者【德铭】所有，保留一切权利（All Rights Reserved）。
+本产品在运行/打包中使用了下列第三方开源组件。特此致谢，并按各自许可证要求附上
+版权与许可文本。以下声明仅适用于这些第三方组件，不改变本产品自身的专有授权。
+
+This product is proprietary software. It bundles the third-party open-source
+components listed below; their copyright notices and license texts are
+reproduced here as required by their respective licenses. These notices apply
+only to those components and do not alter the proprietary license of this product.
+
+============================================================================
+组件清单 / COMPONENTS
+============================================================================
+
+- html2canvas 1.4.1 .............. MIT ............. (c) Niklas von Hertzen and contributors
+- jsPDF 2.5.1 .................... MIT ............. (c) 2010-2021 James Hall; (c) yWorks GmbH
+- KaTeX 0.16.9 .................. MIT ............. (c) 2013-2020 Khan Academy and contributors
+- mermaid 10.9.1 ................ MIT ............. (c) 2014-2022 Knut Sveidqvist and contributors
+- JSZip 3.10.1 (含 pako) ......... MIT ............. (c) 2009-2016 Stuart Knightley and contributors
+- highlight.js 11.9.0 ........... BSD-3-Clause .... (c) 2006-2023 Ivan Sagalaev and other contributors
+- mammoth.js 1.6.0 .............. BSD-2-Clause .... (c) 2013 Michael Williamson
+- pdf.js (pdfjs-dist 3.11.174) .. Apache-2.0 ...... (c) 2023 Mozilla Foundation and contributors
+- Electron 31.7.7 ............... MIT ............. (c) Electron contributors; (c) 2013-2020 GitHub Inc.
+- Chromium (随 Electron 分发) .... BSD-3-Clause 等 .. (c) The Chromium Authors
+- Node.js (随 Electron 分发) ...... MIT ............. (c) Node.js contributors; (c) Joyent, Inc.
+
+注：Electron 运行时内含 Chromium、Node.js、V8、FFmpeg（LGPL）等众多组件，其完整逐项
+许可清单随 Electron 一并分发（Electron 的 LICENSE 与 LICENSES.chromium.html）。
+
+============================================================================
+MIT License
+适用于 / Applies to: html2canvas, jsPDF, KaTeX, mermaid, JSZip (+pako),
+                    Electron, Node.js
+============================================================================
+
+Copyright (c) 上述各组件的相应版权持有人 / the respective copyright holders
+listed above.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+============================================================================
+BSD 3-Clause License
+适用于 / Applies to: highlight.js, Chromium
+============================================================================
+
+Copyright (c) 2006-2023 Ivan Sagalaev and other contributors (highlight.js)
+Copyright (c) The Chromium Authors. All rights reserved. (Chromium)
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors
+   may be used to endorse or promote products derived from this software
+   without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+============================================================================
+BSD 2-Clause License
+适用于 / Applies to: mammoth.js
+============================================================================
+
+Copyright (c) 2013, Michael Williamson
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+============================================================================
+Apache License 2.0
+适用于 / Applies to: pdf.js (pdfjs-dist)
+============================================================================
+
+Copyright 2023 Mozilla Foundation
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+these files except in compliance with the License. You may obtain a copy of the
+License at:
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License.
+
+The full text of the Apache License 2.0 is available at the URL above and is
+incorporated here by reference. Key terms (summary, non-authoritative):
+ - You receive a perpetual, worldwide, royalty-free copyright and patent license.
+ - You must retain this NOTICE and the above copyright and license statements
+   when redistributing.
+ - The software is provided "AS IS", without warranties or conditions.
+
+----------------------------------------------------------------------------
+如需任一组件的完整源码或完整许可证正本，可通过 kdm164747031@gmail.com 索取，
+或访问各组件的官方仓库。
+For complete source or full license texts of any component, contact
+kdm164747031@gmail.com or visit each project's official repository.

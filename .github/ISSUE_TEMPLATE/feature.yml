@@ -1,0 +1,29 @@
+name: 💡 功能建议 / Feature Request
+description: 想要什么功能？说说看。
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: 你想用它完成什么
+      description: 先说你的场景，而不是直接说要什么按钮——这样我更可能做出真正好用的方案。
+      placeholder: 我经常要……，现在得手动……，很麻烦。
+    validations:
+      required: true
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: 你设想的做法（可选）
+      placeholder: 比如在 XX 页面加一个……
+
+  - type: dropdown
+    id: importance
+    attributes:
+      label: 对你来说有多重要
+      options:
+        - 有了会很爽，没有也能凑合
+        - 挺影响效率的，希望能加
+        - 没有这个我几乎没法用
+    validations:
+      required: true

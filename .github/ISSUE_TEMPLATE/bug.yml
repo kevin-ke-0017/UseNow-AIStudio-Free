@@ -1,0 +1,66 @@
+name: 🐛 报告问题 / Bug Report
+description: 软件用起来不对劲？告诉我怎么复现，我来修。
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈！请尽量填详细一点，方便我复现问题。
+        ⚠️ **请不要在这里贴你的 API Key。**
+
+  - type: input
+    id: version
+    attributes:
+      label: 软件版本
+      description: 在软件底部可以看到，例如 V6.3
+      placeholder: V6.3
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: 出问题的功能
+      options:
+        - AI 对话
+        - 图片生成
+        - 视频生成
+        - 本地知识库
+        - 技能 Skill
+        - 历史记录 / 项目
+        - 设置 / 数据备份
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: 出了什么问题
+      description: 你原本想做什么，实际发生了什么
+      placeholder: 我点了「XXX」，结果……
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 怎么复现
+      placeholder: |
+        1. 打开……
+        2. 点击……
+        3. 出现……
+    validations:
+      required: true
+
+  - type: textarea
+    id: shot
+    attributes:
+      label: 截图（强烈建议）
+      description: 直接把图片拖进这个框即可。有报错提示的话请把提示也拍进去。
+
+  - type: input
+    id: os
+    attributes:
+      label: 系统版本
+      placeholder: Windows 11 24H2

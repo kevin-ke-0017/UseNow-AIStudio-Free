@@ -1,0 +1,8 @@
+# GitHub 会据此在仓库页面右侧显示「Sponsor」按钮。
+# 目前只启用 Ko-fi（免费注册、平台零抽成，面向海外用户）。
+# 以后要加爱发电，把下面 custom 那两行的注释去掉并填上你的主页即可。
+
+ko_fi: eldenkeebler
+
+# custom:
+#   - https://afdian.com/a/YOUR_AFDIAN_ID

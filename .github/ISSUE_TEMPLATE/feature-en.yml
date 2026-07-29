@@ -1,0 +1,25 @@
+name: 💡 Feature Request (English)
+description: What would you like the app to do?
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: What are you trying to accomplish
+      description: Describe the situation rather than the button — I can usually find a better solution that way.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: How you imagine it working (optional)
+  - type: dropdown
+    id: importance
+    attributes:
+      label: How much does this matter to you
+      options:
+        - Nice to have
+        - Would noticeably improve my workflow
+        - I can barely use the app without it
+    validations:
+      required: true

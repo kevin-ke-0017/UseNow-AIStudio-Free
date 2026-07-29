@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💼 商务合作 / 商用授权 / 定制开发
+    url: https://github.com/kevin-ke-0017/UseNow-AIStudio-Free/blob/main/COMMERCIAL.md
+    about: 企业授权、定制开发、私有化部署、品牌合作请走邮件，不要开 Issue。
+  - name: 📖 使用问题先看这里
+    url: https://github.com/kevin-ke-0017/UseNow-AIStudio-Free#-常见问题
+    about: 杀毒误报、数据存在哪、要不要花钱等常见问题，README 里都写了。
+  - name: 📧 直接联系作者
+    url: mailto:kdm164747031@gmail.com
+    about: 不方便公开讨论的问题，可以直接发邮件。
