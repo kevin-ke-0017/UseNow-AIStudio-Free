@@ -78,9 +78,11 @@
 
 ### 1️⃣ 下载
 
-到 **[Releases 页面](../../releases/latest)** 下载 `UseNowAIStudio-x.y.z-portable.exe`。
+到 **[Releases 页面](../../releases/latest)** 下载 `UseNowAIStudio-x.y.z-win64.zip`，解压后双击里面的 `UseNowAIStudio-x.y.z-portable.exe`。
 
-**免安装**——下载完双击就能运行，不写注册表、不装驱动、不需要管理员权限。想卸载？删掉这个 exe 就行。
+压缩包里只有三样东西：主程序、一份中英文使用说明、一个 SHA256 校验值文件。
+
+**免安装**——解压完双击就能运行，不写注册表、不装驱动、不需要管理员权限。想卸载？删掉这个 exe 就行。
 
 ### 2️⃣ 拿一个 API Key
 
@@ -105,15 +107,21 @@
 
 这是**未购买代码签名证书的独立开发者软件的通病**，不是病毒。
 
-Windows SmartScreen 对下载量低、未签名的 exe 一律弹「Windows 已保护你的电脑」。点 **「更多信息」→「仍要运行」** 即可。部分国产杀软也可能误报 Electron 打包程序，加信任即可。
+正常情况下，从 Releases 下载 zip、解压后双击是不会弹提示的。如果你的解压工具把「网络来源标记」一并带了过来，Windows SmartScreen 就会弹「Windows 已保护你的电脑」——两种处理方式，任选其一：
 
-想自己确认文件没被篡改？每个 Release 都附了 **SHA256 校验值**，在 PowerShell 里运行：
+- 点 **「更多信息」→「仍要运行」**
+- 或右键 exe →「属性」→ 勾选底部的 **「解除锁定」** → 确定，之后就再也不会弹
+
+部分国产杀软也可能误报 Electron 打包程序，加信任即可。
+
+想自己确认文件没被篡改？每个 Release 都附了 **SHA256 校验值**（zip 和 exe 各一个），在 PowerShell 里运行：
 
 ```powershell
-Get-FileHash .\UseNowAIStudio-6.3.0-portable.exe -Algorithm SHA256
+Get-FileHash .\UseNowAIStudio-6.4.0-win64.zip -Algorithm SHA256
+Get-FileHash .\UseNowAIStudio-6.4.0-portable.exe -Algorithm SHA256
 ```
 
-对得上就是原版。
+和 Release 页 `SHA256.txt` 里的值对得上就是原版。
 </details>
 
 <details>

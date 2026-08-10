@@ -78,7 +78,9 @@ Chats, images and knowledge-base documents all live on your own computer. The ap
 
 ### 1️⃣ Download
 
-Grab `UseNowAIStudio-x.y.z-portable.exe` from the **[Releases page](../../releases/latest)**.
+Grab `UseNowAIStudio-x.y.z-win64.zip` from the **[Releases page](../../releases/latest)**, unzip it, and double-click `UseNowAIStudio-x.y.z-portable.exe` inside.
+
+The zip holds just three things: the app, a bilingual quick-start text file, and a SHA256 checksum file.
 
 **No installer.** Double-click and it runs — no registry writes, no drivers, no admin rights. To uninstall, delete the file.
 
@@ -105,12 +107,13 @@ There's a **📖 Guide** page inside the app with three-step setup and practical
 
 That's the standard experience for software from an independent developer without a paid code-signing certificate. It is **not malware**.
 
-Windows SmartScreen flags any unsigned executable with a low download count. Click **"More info" → "Run anyway"**.
+Downloading the zip and extracting it usually opens without any prompt. If your extraction tool carries the Mark of the Web over to the exe, Windows SmartScreen will flag it — unsigned software with a low download count always gets flagged. Either click **"More info" → "Run anyway"**, or right-click the exe → **Properties** → tick **"Unblock"**, which silences it permanently.
 
 Want to verify the file yourself? Every release ships a **SHA256 checksum**. In PowerShell:
 
 ```powershell
-Get-FileHash .\UseNowAIStudio-6.3.0-portable.exe -Algorithm SHA256
+Get-FileHash .\UseNowAIStudio-6.4.0-win64.zip -Algorithm SHA256
+Get-FileHash .\UseNowAIStudio-6.4.0-portable.exe -Algorithm SHA256
 ```
 
 If it matches the value in the release notes, the file is untampered.
