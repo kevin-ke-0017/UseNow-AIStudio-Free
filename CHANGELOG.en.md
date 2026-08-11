@@ -6,6 +6,23 @@ Only user-visible changes are listed. Download: **[Releases](../../releases/late
 
 ---
 
+## V7.1 · 2026-08-11
+
+**Fixed**
+- **A reference image rejected by content moderation used to be misdiagnosed.**
+  The service puts the reason in `code` (`content_policy_violation`) and the prose in
+  `message`; the app only read the message, so "content rejected" was classified as
+  "some parameters may be unsupported — try a different aspect/duration", pointing you
+  the wrong way entirely. The `code` is now read too, and the hint says plainly that the
+  **reference image** is the usual cause and that aspect/duration/resolution are irrelevant.
+- **No more waiting 20 minutes for nothing when the service stalls a task.** Sometimes it
+  neither rejects nor starts — it just hangs. After three minutes still queued, the app now
+  names the two likely causes (backend queue / stuck in moderation) and offers a
+  **Stop waiting** button; stopping keeps the `video_id` so a task that finishes later can
+  still be retrieved. The 20-minute timeout screen carries the same note and the ID.
+- A failure detected while polling used to dump raw JSON only. It now gives the same
+  plain-language hint as a failure at submit time, and notes the reference image is kept.
+
 ## V7.0 · 2026-08-10
 
 **Fixed**
