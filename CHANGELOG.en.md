@@ -6,6 +6,15 @@ Only user-visible changes are listed. Download: **[Releases](../../releases/late
 
 ---
 
+## V7.0 · 2026-08-10
+
+**Fixed**
+- After switching to English, the result line under the video parameters
+  (size / duration / frames / frame rate) and the empty state of the video
+  gallery stayed in Chinese. Both are assembled in JS without translation
+  markers, so the language sweep never reached them; they are now recomputed
+  along with everything else.
+
 ## V6.9 · 2026-08-10
 
 > V6.6–V6.8 were interim builds that were never released on their own; their changes are folded into this entry.
