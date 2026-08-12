@@ -6,6 +6,112 @@ Only user-visible changes are listed. Download: **[Releases](../../releases/late
 
 ---
 
+## V7.6 · 2026-08-12
+
+**Fixed**
+- **The "elapsed" figure was fake.** It was computed as *poll count × 5 s*, and `genVideo`
+  never cancelled the previous polling chain — every submission started another one, each
+  counting independently while writing to the same panel, producing self-contradicting
+  readouts like "elapsed ~5.9 min · 3:27". It now uses real wall-clock time only, and a
+  generation keeps exactly one polling chain (older ones carry a sequence number and retire).
+- The long-wait notice fired too early. The threshold is now 2.5× the **measured typical
+  duration for that resolution tier** rather than a fixed number of minutes, and the notice
+  states what the tier usually takes.
+
+**New**
+- **The percentage is back, and this time it is grounded.** Real progress is used when the
+  service reports it; otherwise the app estimates from the measured typical duration for
+  that tier and labels it **est.** Past 1.5× the typical duration it **stops estimating** and
+  falls back to the indeterminate bar — estimating is fine, pretending it is measured is not.
+  Defaults come from real runs (480p ≈ 100 s, 720p/1080p ≈ 3 min) and each success is
+  recorded, using the median of the last 8.
+- The result line now shows **"~N min to produce"** before you press Generate.
+- **Video records now show the full parameters**: mode (text/image/keyframe/multi-image),
+  resolution, tier, aspect, duration, frame rate, start→end time — plus a **thumbnail of the
+  reference image** for image-to-video. Older records simply omit what was never stored.
+- **Locally uploaded reference images now have a remove (✕) button.** Previously only
+  gallery-picked images had one. Fixed for all four slots (image-to-image, first/last frame,
+  multi-image); in multi-image mode a single picture can be removed on its own.
+
+## V7.5 · 2026-08-11
+
+**Retracting the previous release's judgement**
+
+Testing showed that **a perfectly normal reference image also sits at zero progress for
+over two minutes and then succeeds.** So "long time at zero progress = stuck" is simply
+false — the service reports progress 0 for normally queued tasks too. The
+"⚠️ Likely stuck — almost certainly not slowness" claim added in V7.2/V7.4 was unfounded
+and would talk you out of jobs that were going to succeed. All of it is withdrawn:
+
+- Removed the "⚠️ Likely stuck" state and every assertion attached to it.
+- The long-wait notice is now a **neutral statement**, and only appears after 5 minutes:
+  it says plainly that a normal queue can take this long and waiting may still succeed,
+  and that the other possibility is moderation — while stating that **the two are
+  indistinguishable from here**. Whether to wait or stop is your call.
+- Removed the reference-image memory. It treated "timed out" as evidence that an image
+  was bad, and that evidence is now shown to be unreliable — a normal image that timed
+  out in a queue would be flagged too.
+- The stop-waiting and timeout screens no longer show `video_id` or "Query again".
+  Querying again returns nothing, so both were noise. They now simply say the reference
+  image and settings are kept and you can retry.
+
+> Also verified: sending the same image to the chat endpoint returns a normal description,
+> no rejection. Image moderation therefore happens only inside the video pipeline, and the
+> client **cannot** find out ahead of time. Telling you before you submit is not possible —
+> better to say so than to ship a guess.
+
+## V7.4 · 2026-08-11
+
+**New**
+- **Reference images are remembered.** Confirmed by testing: when the same picture is sent
+  inline, the service neither rejects it nor starts it — it just hangs until timeout. In other
+  words the service will not tell you up front that it was rejected. So the app remembers
+  instead: a reference image that was **explicitly rejected**, or that **never started
+  processing and timed out**, is flagged the moment you pick it again, right under the
+  parameters — no need to spend another few minutes hitting the same wall.
+  Advisory only; you can still proceed.
+
+**Improved**
+- The indeterminate progress bar is now a smooth sweeping light instead of black stripes —
+  the stripes looked poor and could be misread as "a few segments already done".
+- Tighter escalation: likely causes and **Stop waiting** now appear at **2 minutes**, and the
+  status becomes "⚠️ Likely stuck" at **5 minutes** of zero progress (was 3 / 8). Three or
+  four minutes is already enough to tell.
+
+## V7.3 · 2026-08-11
+
+**Improved**
+- The debug panel now reports how the reference image was sent. The same picture
+  uploaded **from disk** versus picked **from the gallery** may not reach the service the
+  same way: a gallery image that is a link and cannot be fetched locally is passed through
+  as a link, while every other case is fetched, fitted and embedded. The service may not
+  run the same moderation pipeline for a link as for an embedded image — which would
+  explain why the same picture is sometimes rejected instantly and sometimes hangs
+  until timeout. Failures, timeouts and stop-waiting screens all show which path was used.
+
+## V7.2 · 2026-08-11
+
+**Fixed**
+- **The progress bar no longer invents progress.** It used to show
+  `max(server progress, a curve estimated from elapsed time)` — added because a bar
+  pinned at 0% looked broken. The cost: when the service hangs a task and reports
+  progress 0 forever, the bar still crept to 17%, so you waited 20 minutes for nothing.
+  **A fabricated progress bar is far worse than an empty one.** When the service reports
+  no progress, the app now says "no progress reported" and shows an indeterminate
+  striped bar — it never claims a completion percentage it does not have.
+- **The stall notice no longer flickers.** It used to be appended after rendering, and the
+  5-second poll rewrote the whole block, so it appeared and vanished as the status
+  alternated between queued and running. It is now part of the render and stays put.
+
+**Improved**
+- Zero progress for a long time is now escalated in stages: at 3 minutes you get the likely
+  causes and a **Stop waiting** button; **at 8 minutes with still zero progress the status
+  becomes "⚠️ Likely stuck"**, stating plainly that this is almost certainly not slowness —
+  the usual cause is a reference image that failed moderation, which the service sometimes
+  hangs indefinitely instead of rejecting.
+  (It says "likely stuck", not "failed": the service never confirmed a failure, and the
+  wording does not draw that conclusion on its behalf.)
+
 ## V7.1 · 2026-08-11
 
 **Fixed**
