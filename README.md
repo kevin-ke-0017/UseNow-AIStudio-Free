@@ -12,8 +12,9 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-V6.3-06b6d4?style=flat-square" alt="version">
+  <img src="https://img.shields.io/badge/version-V7.8-06b6d4?style=flat-square" alt="version">
   <img src="https://img.shields.io/badge/platform-Windows%2010%2F11%20x64-2563eb?style=flat-square" alt="platform">
+  <img src="https://img.shields.io/badge/Android-6.0%2B-3ddc84?style=flat-square" alt="android">
   <img src="https://img.shields.io/badge/安装-免安装单文件-16a34a?style=flat-square" alt="portable">
   <img src="https://img.shields.io/badge/个人使用-免费-16a34a?style=flat-square" alt="free">
   <img src="https://img.shields.io/badge/license-专有软件%20Proprietary-64748b?style=flat-square" alt="license">
@@ -37,6 +38,26 @@
 所有对话、图片、知识库文档都存在你自己的电脑里，软件本身**不设账号、不收集任何数据、不上传任何内容**——它只和你自己填的那个 AI 服务商通信。
 
 > 💡 面向的是：想认真用 AI 干活、但不想折腾环境、也不放心把资料传上云的人。
+
+---
+
+## 📱 安卓版已发布（V7.8）
+
+手机上跑的是**同一份程序**——不是精简版，也不是配套 App。界面、数据格式、API 设置与电脑版完全一致，同一个 API Key 直接填进去就能用：对话、AI 绘画、AI 视频、本地知识库、技能库，一样不少。
+
+| | |
+|---|---|
+| 系统要求 | Android 6.0 及以上，手机 / 平板均可 |
+| 安装方式 | 直接安装 APK，**不需要应用商店、不需要 root** |
+| 数据存放 | 和电脑版一样，全部留在你自己的手机里 |
+| 与电脑版的差异 | 只有一处：**语音输入与朗读在手机端不提供**（安卓系统 WebView 不支持这两项能力），其余功能一致 |
+
+针对手机做了实机打磨：图片和视频**一键存进系统相册**、返回键逐级关闭面板而不是直接退出程序、顶栏与弹窗自动让开状态栏和手势条、按钮尺寸按触控标准放大。
+
+> **本仓库不提供 APK 下载。** 安卓版不通过公开 Release 分发。需要的话请通过
+> [提 Issue](../../issues) 或邮件 **kdm164747031@gmail.com** 联系。
+>
+> 另外两件事先说清楚：**鸿蒙 NEXT 不兼容安卓 APK，装不上**；**iOS 暂不支持**。
 
 ---
 
@@ -147,7 +168,11 @@ Get-FileHash .\UseNowAIStudio-6.4.0-portable.exe -Algorithm SHA256
 <details>
 <summary><b>支持 Mac / Linux / 手机吗？</b></summary>
 
-目前只发布 **Windows 10/11 64 位**版本。Mac / Linux 版本视需求再定——[提个 Issue](../../issues) 告诉我你想要哪个平台。
+**手机：安卓版已经有了**（Android 6.0+），和电脑版是同一份程序，详见上面的[安卓版一节](#-安卓版已发布v78)。APK 不在本仓库分发，需要请联系我。
+
+**iOS 暂不支持**，短期内也不会有——不上架应用商店的话只能靠开发者证书侧载，证书过期后 App 会直接闪退，不适合交给普通用户。
+
+**Mac / Linux** 视需求再定——[提个 Issue](../../issues) 告诉我你想要哪个平台。
 </details>
 
 <details>

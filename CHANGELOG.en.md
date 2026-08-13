@@ -6,6 +6,46 @@ Only user-visible changes are listed. Download: **[Releases](../../releases/late
 
 ---
 
+## V7.8 · 2026-08-13
+
+**Fixed (desktop and Android)**
+- **The “last frame” in Image→Video never took effect.** The thumbnail appeared and the
+  video generated fine, but that last frame was never sent to the model — the result was
+  identical to supplying the first frame alone. First and last frames are now submitted
+  the way the API documents first→last transitions, so the last frame really participates.
+- **Keyframe animation could be submitted with only one image.** Keyframe animation
+  interpolates *between* two frames; with only one it either errors out or degrades into
+  Image→Video. It now clearly asks for both a first and a last frame.
+
+**Added**
+- **Negative prompt for video.** Describe what you don't want (blurry, watermark, …),
+  the same way image generation already works. Leave it blank to skip.
+- **Seed for video.** Reuse the same number to reproduce the same result, which makes it
+  easy to tweak wording without changing the whole shot. Blank means random every time.
+
+## V7.7 · 2026-08-12
+
+**Added**
+- **Android build.** Same application as the desktop version — identical UI, data format
+  and API settings. Installed directly from an APK, no app store. Voice input and
+  read-aloud are not available on mobile (the system WebView does not provide them).
+
+**Fixed (mobile)**
+- **Saving an image or video jumped to a browser.** Tapping a download link was treated
+  as ordinary navigation and handed to an external browser, so you had to switch apps and
+  wait for the file to load before you could save it. Downloads now go straight to the
+  **system gallery** (other files to the Downloads folder), with a confirmation message.
+- **The top bar sat under the status bar** — buttons were hard to hit and easily pulled
+  down the notification shade; some panels overlapped it so far that their close button
+  could not be tapped. Everything now clears the status bar and gesture area.
+- **Scrolling the top bar to the right carried the menu button off screen.** It is pinned now.
+- **The version number was invisible on phones** — the footer that carries it is hidden
+  there (it covered the composer). It now appears at the bottom of the side menu.
+- **The user guide still described voice features that do not exist on mobile.**
+- Back button / back gesture now steps out one level at a time: side menu → dialog →
+  chat page → press twice to exit. Previously it quit the app outright with a panel open.
+- Buttons and dialogs enlarged for touch.
+
 ## V7.6 · 2026-08-12
 
 **Fixed**

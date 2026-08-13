@@ -12,8 +12,9 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-V6.3-06b6d4?style=flat-square" alt="version">
+  <img src="https://img.shields.io/badge/version-V7.8-06b6d4?style=flat-square" alt="version">
   <img src="https://img.shields.io/badge/platform-Windows%2010%2F11%20x64-2563eb?style=flat-square" alt="platform">
+  <img src="https://img.shields.io/badge/Android-6.0%2B-3ddc84?style=flat-square" alt="android">
   <img src="https://img.shields.io/badge/install-portable%20single%20exe-16a34a?style=flat-square" alt="portable">
   <img src="https://img.shields.io/badge/personal%20use-free-16a34a?style=flat-square" alt="free">
   <img src="https://img.shields.io/badge/license-Proprietary-64748b?style=flat-square" alt="license">
@@ -37,6 +38,32 @@ Most AI tools want a monthly subscription, scatter features across a dozen websi
 Chats, images and knowledge-base documents all live on your own computer. The app has **no account system, collects no data and uploads nothing** — it talks only to the AI provider you configure yourself.
 
 > 💡 Built for people who want to get real work done with AI, without setting up a dev environment, and without handing their documents to a cloud service.
+
+---
+
+## 📱 Android build is out (V7.8)
+
+The phone runs **the same application** — not a cut-down version, not a companion app.
+Identical UI, identical data format, identical API settings; paste the same API key and
+everything works: chat, image generation, video generation, local knowledge base, skills.
+
+| | |
+|---|---|
+| Requires | Android 6.0 or later, phone or tablet |
+| Install | Install the APK directly — **no app store, no root** |
+| Your data | Stays on your phone, exactly like the desktop build |
+| Difference from desktop | Exactly one: **voice input and read-aloud are not available on mobile** (the Android system WebView does not provide them). Everything else is the same |
+
+It has been polished on real devices: images and videos save **straight to the system
+gallery**, the back gesture closes panels one level at a time instead of quitting the app,
+the top bar and dialogs clear the status bar and gesture bar automatically, and touch
+targets follow the platform sizing guidelines.
+
+> **The APK is not distributed from this repository** and is not attached to public releases.
+> If you want it, [open an issue](../../issues) or email **kdm164747031@gmail.com**.
+>
+> Two things worth stating up front: **HarmonyOS NEXT cannot install Android APKs**, and
+> **iOS is not supported**.
 
 ---
 
@@ -142,7 +169,15 @@ What costs money is **your own API usage**, paid directly to your AI provider. I
 <details>
 <summary><b>Mac / Linux / mobile?</b></summary>
 
-Only **Windows 10/11 64-bit** is published today. Other platforms depend on demand — [open an issue](../../issues) and tell me what you need.
+**Mobile: the Android build exists** (Android 6.0+) and is the same application as the
+desktop one — see the [Android section](#-android-build-is-out-v78) above. The APK is not
+distributed from this repository; contact me if you want it.
+
+**iOS is not supported** and will not be soon: without going through the App Store, the only
+option is sideloading with a developer certificate, and the app hard-crashes once that
+certificate expires. That is not something to hand to ordinary users.
+
+**Mac / Linux** depend on demand — [open an issue](../../issues) and tell me what you need.
 </details>
 
 <details>
