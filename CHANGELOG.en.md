@@ -6,6 +6,60 @@ Only user-visible changes are listed. Download: **[Releases](../../releases/late
 
 ---
 
+## V7.9 · 2026-08-16
+
+**Fixed**
+- **The “China direct” route pointed at the wrong address, so keys registered on the
+  Chinese site were always rejected as invalid tokens.** It used `apihub.agnes-ai.cn`,
+  while the Chinese site's own documentation gives `api.agnes-ai.cn`. This was a nasty one
+  to diagnose: that host is alive and answers normally — it simply does not recognise keys
+  created in the Chinese console, so the error looked like a mistyped key no matter how
+  many times you pasted it again. The “China direct” button now fills in the correct address.
+  > Existing saved settings are untouched. If you were stuck on “invalid token”, open
+  > ⚙️ API settings and click the “China direct” button once to update it.
+
+- **Only 3 of the 16 image size options were sizes the model actually produces.** The
+  other 13 (16:9 at 2560×1440, 4K at 3840×2160, and so on) are not native output sizes,
+  so the server silently remapped them to the nearest preset — what you picked and what
+  you got were different, with nothing on screen to tell you. The menu is now rebuilt from
+  the official native size table (1K / 2K / 3K / 4K across five aspect ratios, 20 entries),
+  and each label states the real output size.
+  > 7:4 is gone — the model never supported it — and a 3K tier has been added.
+
+**Added**
+- **Multi-image composition.** The reference slot is now a list rather than a single image:
+  one image is image-to-image, **two or more is composition** — elements from each are
+  merged into a single new image, e.g. "put this character and that product on one poster".
+  - **Add them one at a time.** Every pick is appended instead of replacing what was there;
+    hold Ctrl (⌘ on Mac) to grab several at once. The screen says so.
+  - **The 🖼️ button on gallery images also adds one per click**, and mixes freely with
+    local uploads — previously those two paths overwrote each other.
+  - Each thumbnail carries an index and its own ✕ to remove just that one.
+  - No count limit: **Agnes does not document a maximum**, so the app does not invent one.
+  - The prompt enhancer switches to a composition-aware structure (role of each reference,
+    target scene, how they relate).
+- **🔍 Image → prompt.** Pick a reference image and get back an English prompt that would
+  reproduce it, with **copy** and **use as prompt** buttons.
+  > This uses the **chat model** from your settings (not the image model), so that model
+  > must support images. If it doesn't, you get a plain instruction to switch to a
+  > multimodal model rather than a raw API error.
+- Choosing 3K / 4K with a count above 1 now warns up front: **the provider allows only one
+  image per minute at those tiers**, so most of a batch will fail. That's a rate limit, not
+  a bug in the app.
+
+**Removed**
+- **The negative prompt field for images is gone.** It is not in the image API's parameter
+  list at all — sending it raised no error, it was simply ignored, which is worse than not
+  having it: you believed it was doing something.
+  > The video negative prompt **is** documented and stays.
+
+**Improved**
+- When a connection test fails with a token/key error, the route line now tells you which
+  address to switch to instead of just echoing the server's message — **nine times out of
+  ten this error is the wrong route, not a wrong key.**
+- The chat `/draw` command follows the same native sizes and now understands the 2:3, 3:2
+  and 21:9 aspect ratios.
+
 ## V7.8 · 2026-08-13
 
 **Fixed (desktop and Android)**
