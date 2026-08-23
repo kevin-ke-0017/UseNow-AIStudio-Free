@@ -6,6 +6,33 @@ Only user-visible changes are listed. Download: **[Releases](../../releases/late
 
 ---
 
+## V8.0 · 2026-08-20
+
+**Fixed**
+- **Multi-image video always failed with HTTP 400.** The server's own words:
+  `This request contains multiple images, but mode was omitted` — sending several images
+  requires declaring `mode=keyframes` alongside them, and that field was missing, so this
+  workflow had never once succeeded since the day it was added. It is now sent.
+  > This also corrects a deeper misunderstanding: Agnes supports exactly three shapes —
+  > no image (text-to-video), **exactly one** image (image-to-video), and
+  > **2–3 images with mode=keyframes** (keyframe video). There is no "multiple images
+  > without a mode" form. The image count for multi-image video therefore drops from 8 to
+  > the **3 the service actually allows**, and picking a fourth is flagged on screen rather
+  > than failing at submit time.
+- **Multi-image video could not take images one at a time** — each pick replaced the whole
+  previous batch, so you had to Ctrl-select them all in one go. Same cause as the image
+  reference field in the previous release, and the same fix: an accumulating list where
+  every pick is appended, thumbnails are numbered and individually removable, and the screen
+  explains how to add more.
+- **Switching to English left the reference-image instructions in Chinese.** That line is
+  assembled in JavaScript and carries no translation marker, so the language pass never saw
+  it. Fixed here and in the sibling spots, with a regression assertion to keep it fixed.
+
+**Also**
+- Every interface screenshot on the product page was retaken (six per language). They were
+  still showing V7.0 — the image page without **🔍 Image → prompt**, and the video page
+  without the negative prompt and seed fields.
+
 ## V7.9 · 2026-08-16
 
 **Fixed**
