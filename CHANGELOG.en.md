@@ -6,6 +6,34 @@ Only user-visible changes are listed. Download: **[Releases](../../releases/late
 
 ---
 
+## V8.1 · 2026-08-24
+
+**Fixed**
+- **On Windows, "➕ New folder" did nothing when clicked.** Reported by a customer.
+  The desktop runtime (Electron) **does not implement** the browser's text-input dialog —
+  calling it does not return empty, it throws, so nothing after that line in the click
+  handler ever runs: no dialog, no error, no trace. Phones and browsers both support it,
+  so only people running the exe hit this.
+  > The same cause reached further than that one button: **image favourites, video
+  > favourites, history favourites and knowledge-base subfolders — 5 "New folder" entry
+  > points in total — were all dead on Windows.** They now share one in-app input dialog:
+  > Enter confirms, Esc cancels, clicking outside cancels, and the Android back button
+  > closes it.
+- **On Android, folder and document names in the knowledge base were invisible.** The name
+  is the only element in that row that can shrink — the caret, icon, item count and button
+  row are all fixed width — so on a narrow screen it was squeezed to zero width. The
+  buttons now wrap to a second line and the name gets its full width back. The image,
+  video and history favourite folders share the same structure and were fixed too.
+- **"Copy" sometimes did nothing.** The message and code-block copy buttons had no failure
+  fallback, so a rejected clipboard write (window not focused, permission denied) failed
+  silently. All copying now goes through one entry point that falls back automatically and
+  always reports the result.
+
+**Other**
+- A full desktop sweep: every button on all seven pages was clicked inside the real desktop
+  runtime to confirm there is no second "click does nothing". All three classes of problem
+  are now covered by automated checks.
+
 ## V8.0 · 2026-08-20
 
 **Fixed**
