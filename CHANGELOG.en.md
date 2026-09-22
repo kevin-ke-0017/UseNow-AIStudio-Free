@@ -6,6 +6,109 @@ Only user-visible changes are listed. Download: **[Releases](../../releases/late
 
 ---
 
+## V9.9 · 2026-09-22
+
+**The settings panel is renamed, plus three places where raw tags leaked into the UI**
+
+- **“⚙️ API Settings” is now just “⚙️ Settings”.** It has long held more than API
+  configuration — licence, personalisation, interface language, general options and the
+  diagnostics log all live on that page, and the old name made them hard to find.
+  Every in-app pointer to it (setup wizard, timeout hint, auth-failure hint and so on)
+  was updated to match. This also fixes an older oversight: the title was never wired
+  into the translation table, so **it showed in Chinese even in English mode**.
+- **`<b>` `</b>` `<br>` no longer show up as literal angle brackets** in three
+  explanatory paragraphs: Settings → General → the auto re-queue note,
+  Settings → Licence → the re-bind note, and Settings → Diagnostics log.
+  Those three were routed through the “fill as plain text” translation channel, so the
+  bold tags were escaped and printed. Harmless to function, but it looked unfinished.
+
+> A static assertion now covers this (`regress.js`): any string containing formatting
+> tags that is wired to the wrong channel fails the suite immediately, instead of being
+> spotted in a screenshot.
+
+**Video progress: 1% used to render as 100%**
+
+Polling was re-checked line by line against the official Agnes Video 2.5 docs. Three fixes:
+
+- **`1%` progress showed as `100%`.** The docs state that `progress` is an **integer
+  from 0 to 100**, but the app carried a "if it's ≤1, multiply by 100" rule meant for
+  servers that report a 0–1 fraction. When the server honestly returned `progress: 1`,
+  the bar filled instantly — and staring at a 100% bar for several minutes just looks
+  like the app has frozen. Only a true fraction (strictly between 0 and 1) is now
+  treated as a ratio; integers are read as 0–100.
+- **A clip counts as finished only when `status` is `completed`.** The docs are explicit:
+  go by `status` and `metadata.url`. The app used to declare success as soon as it found
+  any video URL, which can be an intermediate asset. It now keeps waiting while the
+  server says queued or in progress — but does not wait forever: after 3 consecutive
+  polls (≥15s) of "URL present, status unchanged" it accepts the URL rather than
+  discarding a clip that is actually playable.
+- **Polling now backs off when it hits the rate limit** (5s → 10 → 20 → 40 → 60s cap,
+  straight back to 5s once responses are normal) — exactly what the docs recommend for
+  `429`. Before, it kept asking every 5 seconds, which both kept tripping the limit and
+  ate the per-minute budget that submitting needs: one quota, two paths competing.
+- The 20-minute polling cap is now measured in **wall-clock time** instead of attempts.
+  It used to be "240 attempts × 5s", and once back-off exists those are not the same thing.
+
+> The interval stays at **5 seconds** rather than the 1–2s the docs suggest: that would be
+> 30–60 requests a minute, and the free tier limits requests per minute — which is exactly
+> what caused the whole round of rate limiting fixed in V9.8.
+
+**Two inaccurate explanations, corrected**
+
+- "Once activated it **works offline forever**" reads as "this app works without a
+  connection". What is actually true: the **licence** is verified once and never
+  re-checked online — but chat, images and video all call an AI API, so **using the AI
+  features still needs a connection**. Offline the app still opens, and the local
+  knowledge base, history and export all work. The line on the activation page was
+  corrected too.
+- "2.5 reference images **must be public URLs**" — **not true**; local uploads do work.
+  Both routes are now described: a public URL is what the docs specify and is the most
+  reliable (gallery images carry one); a local file is sent as embedded data, which the
+  docs do not cover and the provider could tighten. The failure hint no longer claims
+  that route is impossible — it just says which route this attempt used.
+
+---
+
+## V9.8 · 2026-09-22
+
+**Video queueing: no longer cut short by its own retries, and a full queue no longer looks like a fault**
+
+What used to happen — it looked exactly like a bug in the app:
+
+1. Submit a video → the server answers **`503 video queue is full`** (the backend runs one
+   job at a time, so this is common at peak)
+2. The app re-queued every 8 seconds → 3 requests inside 25 seconds
+3. The 3rd request tripped the **rate limit** (free tiers count requests per minute)
+4. The app treated the rate limit as a **final failure** → a screen full of red
+
+**So the "queue for up to 20 minutes" design never actually happened** — the real ceiling was
+"however many probes your quota allows", i.e. 3 probes in 25 seconds. That red screen was not a
+queueing failure; the app was cutting its own queueing short.
+
+This release:
+
+- **A rate limit hit while queueing no longer ends the wait** — it means "slow down", not
+  "no slot for you". The 20-minute budget works for the first time: success now depends on
+  patience rather than luck.
+- **New setting: ⚙️ Settings → "Auto re-queue when the video queue is full"**
+  On by default, **30s** interval (minimum 15s), **20 minutes** maximum wait — all adjustable.
+  Why adjustable: the safe interval depends on **your API tier**, which the app cannot see.
+  Free and paid tiers differ a lot, so hard-coding a number would just be guessing for you.
+  **Switch it off** and a full queue is simply reported, with a "🔄 Re-queue" button for you.
+- **The queueing screen is now neutral**: "re-queueing automatically · waiting 3m20s ·
+  attempt 5" instead of red failure styling — queueing is not an error, it is just "not yet".
+- **Removed the forced 60-second wait** after hitting a rate limit.
+- **The failure message shrank from 304 to 121 characters** by default; the diagnostics (the
+  first error verbatim, the raw response, the step-by-step advice) all moved into the
+  collapsed "show raw response" section.
+
+> ⚠ **The single most useful habit**: **do not click "Generate" repeatedly yourself.**
+> Each re-queue is one API request, and several submissions in quick succession trip the
+> provider's rate limit — making a slot harder to get, not easier. Let auto re-queue do it,
+> or raise the interval.
+
+---
+
 ## V9.7 · 2026-09-22
 
 **Spelled out how many devices one redemption code covers**

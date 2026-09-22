@@ -144,7 +144,7 @@ The zip holds just three things: the app, a bilingual quick-start text file, and
 
 The app ships **no AI capacity of its own** — you bring your own provider key (the same way a browser ships no websites).
 
-Pick any provider: Agnes AI, DeepSeek, OpenAI, Gemini, Claude, Qwen, Zhipu GLM… **⚙️ API Settings → Quick add** already has the endpoints and popular models preconfigured. Choose one, paste the key, done.
+Pick any provider: Agnes AI, DeepSeek, OpenAI, Gemini, Claude, Qwen, Zhipu GLM… **⚙️ Settings → Quick add** already has the endpoints and popular models preconfigured. Choose one, paste the key, done.
 
 > New to this? Start with a provider that offers free credits, then decide where to spend money.
 
