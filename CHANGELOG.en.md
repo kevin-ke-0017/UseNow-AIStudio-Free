@@ -6,6 +6,30 @@ Only user-visible changes are listed. Download: **[Releases](../../releases/late
 
 ---
 
+## V10.1 · 2026-09-22
+
+**Stated plainly: one redemption code = 1 computer and 1 phone at a time**
+
+The download page, the notes inside the zip and Settings → Licence used to describe the same
+thing two different ways: one said "1 computer and 1 phone at a time", the other said "up to 3
+computers and up to 3 phones". **The second one turned the re-bind allowance into a
+simultaneous-device count — promising two extra computers and two extra phones in writing.**
+
+All four now say the same thing, matching what is actually sold:
+
+| | |
+|---|---|
+| In use at once | **1 computer + 1 phone** (tallied separately; using both costs no re-binds) |
+| Free re-binds | **2** per side |
+| Does NOT count | reinstalling the app, clearing its data, swapping a network card |
+| Counts as one re-bind | OS reinstall / factory reset / a different device |
+
+When the re-binds are used up, contact the seller, who can sign a fresh activation code by hand.
+
+> No functional change in this release — it only makes the wording unambiguous.
+
+---
+
 ## V10.0 · 2026-09-22
 
 **Fixes the sentence that was still wrong on the v9.9.0 download page and inside the zip**

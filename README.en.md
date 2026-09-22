@@ -114,16 +114,17 @@ history and export all work.
 The machine code is just a hash of a device identifier — **no hardware details, no API key, no
 prompts** — so it is safe to send.
 
-**How many devices does one code cover? Computer and phone are counted separately:**
+**One code covers 1 computer and 1 phone at a time.** Computer and phone are counted
+separately:
 
-| | First activation | Free re-binds | Total |
+| | In use at once | Free re-binds | Activations on that side |
 |---|---|---|---|
-| 💻 Computer | 1 | 2 | **3** |
-| 📱 Phone | 1 | 2 | **3** |
+| 💻 Computer | **1** | 2 | 3 |
+| 📱 Phone | **1** | 2 | 3 |
 
 So **one code runs on your computer and your phone at the same time**, and that costs you no
-re-binds at all — the two sides are tallied independently. After three computers, the phone's
-three are still untouched, and vice versa.
+re-binds at all — the two sides are tallied independently. Once the computer's two re-binds are
+spent, the phone's two are still untouched, and vice versa.
 
 Reinstalling the app, clearing its data or swapping a network card do **not** count as re-binds
 (the same device simply gets its original licence re-issued). Only reinstalling the OS, a factory
