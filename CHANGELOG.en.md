@@ -6,6 +6,30 @@ Only user-visible changes are listed. Download: **[Releases](../../releases/late
 
 ---
 
+## V10.0 · 2026-09-22
+
+**Fixes the sentence that was still wrong on the v9.9.0 download page and inside the zip**
+
+V9.9 corrected the misleading "works offline forever" wording inside the app, **but the
+download page and the `ReadMe-使用说明.txt` inside the zip were missed** — so the v9.9.0
+release page carried the correction and the wrong claim side by side. The program itself is
+unchanged and had no defect; this release exists because the text a buyer reads said the
+opposite of the truth.
+
+All four places (release body in both languages, in-zip ReadMe in both languages) now match
+the app:
+
+> Only the activation step needs the internet — afterwards the **licence is never re-verified
+> online** and never asks again. That is about the **licence**: chat, images and video all call
+> an AI API, so **using the AI features still needs a connection**. Offline the app still opens,
+> and the local knowledge base, history and export all work.
+
+> The release gate gained a rule that blocks "offline forever" style claims, right next to the
+> one that blocks "free forever". **The miss happened precisely because that check relied on
+> somebody remembering.**
+
+---
+
 ## V9.9 · 2026-09-22
 
 **The settings panel is renamed, plus three places where raw tags leaked into the UI**

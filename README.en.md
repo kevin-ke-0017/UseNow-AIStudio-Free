@@ -106,7 +106,10 @@ targets follow the platform sizing guidelines.
 This is **paid software**, licensed per device. On first launch the app shows this device's
 **machine code**: activate in one click with the **redemption code** you got when you bought it,
 or send the machine code to the seller and paste back an **activation code**.
-**Once activated it works offline forever** and never asks again.
+**Once activated the licence is never re-verified online** and never asks again.
+That is about the **licence**: chat, images and video all call an AI API, so **using the AI
+features still needs a connection**. Offline the app still opens, and the local knowledge base,
+history and export all work.
 
 The machine code is just a hash of a device identifier — **no hardware details, no API key, no
 prompts** — so it is safe to send.
