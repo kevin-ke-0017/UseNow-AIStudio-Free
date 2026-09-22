@@ -101,6 +101,35 @@ targets follow the platform sizing guidelines.
 
 ---
 
+## 🔑 An activation code is required (from V8.7)
+
+This is **paid software**, licensed per device. On first launch the app shows this device's
+**machine code**: activate in one click with the **redemption code** you got when you bought it,
+or send the machine code to the seller and paste back an **activation code**.
+**Once activated it works offline forever** and never asks again.
+
+The machine code is just a hash of a device identifier — **no hardware details, no API key, no
+prompts** — so it is safe to send.
+
+**How many devices does one code cover? Computer and phone are counted separately:**
+
+| | First activation | Free re-binds | Total |
+|---|---|---|---|
+| 💻 Computer | 1 | 2 | **3** |
+| 📱 Phone | 1 | 2 | **3** |
+
+So **one code runs on your computer and your phone at the same time**, and that costs you no
+re-binds at all — the two sides are tallied independently. After three computers, the phone's
+three are still untouched, and vice versa.
+
+Reinstalling the app, clearing its data or swapping a network card do **not** count as re-binds
+(the same device simply gets its original licence re-issued). Only reinstalling the OS, a factory
+reset or a genuinely different device consumes one. Once all three are used, contact the seller.
+
+> **Upgrading from an earlier version, in this order**: in the old version use Settings →
+> 💾 Backup & Restore → "📤 Export all data", then uninstall, install the new version, activate,
+> and finally "📥 Import & restore". An older licence is not inherited.
+
 ## 🚀 Get started in 3 steps
 
 ### 1️⃣ Download
@@ -211,7 +240,7 @@ Full statement: **[PRIVACY.en.md](PRIVACY.en.md)**.
 
 | Use case | Cost |
 | --- | --- |
-| **Personal use** (including freelance work you get paid for) | ✅ **Free forever** |
+| **Personal use** (including freelance work you get paid for) | 🔑 **Activation code required** (one-time purchase, no expiry) — whatever you earn with it is **yours, no revenue share** |
 | **Company / team internal use** | Commercial license required |
 | **Custom builds / white-label / on-premise** | Custom engagement |
 | **Reselling, redistribution, reverse engineering** | ❌ Not permitted |

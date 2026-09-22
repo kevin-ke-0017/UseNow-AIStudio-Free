@@ -6,6 +6,349 @@ Only user-visible changes are listed. Download: **[Releases](../../releases/late
 
 ---
 
+## V9.7 · 2026-09-22
+
+**Spelled out how many devices one redemption code covers**
+
+- The activation page only said "each code covers 2 free re-binds" and never mentioned that
+  computer and phone are **tallied separately**. Now it says so:
+
+  | | First activation | Free re-binds | Total |
+  |---|---|---|---|
+  | 💻 Computer | 1 | 2 | **3** |
+  | 📱 Phone | 1 | 2 | **3** |
+
+  **One code runs on your computer and your phone at the same time, costing no re-binds.**
+  After three computers, the phone's three are still untouched.
+- It also spells out what does *not* count as a re-bind: reinstalling the app, clearing its
+  data or swapping a network card (the same device simply gets its original licence
+  re-issued). Only an OS reinstall, factory reset or a different device consumes one.
+- Corrected "free forever for personal use" in the licensing section — this has been **paid,
+  per-device software since V8.7**. Whatever you earn with it is still entirely yours.
+
+---
+
+## V9.6 · 2026-09-21
+
+**A failed video submit now tells you what the *first* error was**
+
+- A "server busy" response makes the app retry. The catch: retrying is itself what trips
+  rate limits — so **what you end up seeing is "rate limited", while the error that
+  actually caused the retry left no trace at all**. Diagnosis dead-ends there: you only
+  ever see the consequence of the retry, never its cause.
+- The failure message now adds **how many requests that attempt really sent** and **the
+  first error verbatim**. The diagnostics log gained `busyErr` / `busyStatus`.
+- If that first line does not look like "server busy", it *is* the real cause — send it
+  to the developer.
+
+---
+
+## V9.5 · 2026-09-21
+
+**Fix: video generation gave up after 10 minutes, not the intended 20**
+
+- The poll counter was **incremented twice per poll**, and the timeout check reads that
+  counter. So the code said "240 polls × 5s = 20 minutes" while it actually gave up at
+  poll 120 — **10 minutes**. A job that would have finished at 12 minutes was abandoned
+  and the screen said "⏱ Timeout"; all you saw was another failure. It is now really 20.
+- **Half the requests while waiting.** Progress checks asked the new endpoint first and
+  then fell back to the legacy one whenever no video URL had come back yet — but a job
+  that is simply still running has no URL, so the fallback fired every 5 seconds for
+  nothing. It now only runs when the new endpoint genuinely can't answer. This also
+  lowers the chance of tripping a rate limit.
+- `attempts` on the video rows of the diagnostics log used to be double the real poll
+  count; it is now accurate.
+
+> Both were found by a user questioning the `attempts` number in the diagnostics log —
+> it was arithmetically impossible (125 polls × 5s needs 10m25s, but only 6m11s had passed).
+
+---
+
+## V9.4 · 2026-09-21
+
+**Fix: the video retry loop turned "server busy" into "rate limited"**
+
+- When a video submit hit "server busy", the app retried on a **fixed 8-second timer**.
+  One click therefore fired 3 requests within 25 seconds — and free tiers limit exactly
+  that: requests per minute. So the first request was merely *busy* and the third came
+  back 429. **The app was manufacturing its own failure.**
+- Retries now **back off**: 8s → 16s → 32s → 60s max. Same three attempts, one third of
+  the request density.
+- **After a rate limit, a 60-second cooldown** blocks Generate and tells you how many
+  seconds are left. Previously the button was immediately clickable and said nothing, so
+  clicking again just dug the limit deeper. The cooldown lives in memory only — reopening
+  the app retries right away.
+
+> To check whether this is what you are hitting: ⚙️ Settings → "🩺 API diagnostics log",
+> and look at `tries` on the video rows. Anything above 1 means that click sent multiple
+> requests.
+
+---
+
+## V9.3 · 2026-09-21
+
+**Fix: a rate limit was reported as "the server is busy"**
+
+- When video generation failed because the API account hit a rate limit (HTTP 429),
+  the app said "⏳ The video backend handles one task at a time — wait 1–2 min and retry."
+- **Those two call for opposite actions.** Busy clears if you wait; a rate limit
+  **does not** — you have to slow down or upgrade with your API provider. Anyone
+  reading "wait 1–2 min" will keep waiting for an error that never clears.
+- It now says plainly that this is a rate limit rather than congestion, and gives three
+  concrete steps. The provider's own message is still shown in full so you can forward it.
+- Worth knowing: the image page sends **one request per image**, so a burst of image
+  generation around a video job can easily exhaust your per-minute allowance. The hint
+  says so too.
+- Images and chat were always classified correctly; only the video path missed this.
+
+---
+
+## V9.2 · 2026-09-21
+
+**Video requests now appear in the diagnostics log**
+
+- The "🩺 API diagnostics log" only recorded **image** requests, while the description
+  said "image/video". Video is the slowest path and the one most likely to stall — so
+  when a video never arrived and you sent the log to support, it contained nothing
+  about video at all.
+- One video generation now records two entries, **kept apart**: how long the submit
+  queued (and how many retries it took) versus how long the task itself ran. A stall
+  in the first means the video service is busy and waiting is the answer; a stall in
+  the second means the task itself went wrong.
+- Task failures are logged, and so is "the server said it finished but gave no video
+  URL" — the screen says *done* while you have nothing, and that state used to leave
+  no trace at all.
+- Cancelling yourself is not a failure and is not logged.
+- Nothing new is collected: the log still has **no API key and no prompt text** (length
+  only).
+
+---
+
+## V9.1 · 2026-09-21
+
+**The diagnostics log now names where your machine code came from**
+
+- On Windows the machine code has two sources. Normally it reads a system identifier that
+  **survives reinstalling the app and swapping network cards**. If that read fails, it
+  falls back to "computer name + CPU + RAM" — and **that one changes if you rename the PC
+  or add a memory stick**, which means re-activating.
+- Until now there was no way to tell which path you were on; you only found out when the
+  app asked you to activate again. The header of ⚙️ Settings → "🩺 API diagnostics log"
+  (the "version" line) now says so, which makes support a one-glance question.
+- It is one extra line and collects nothing new: the log still contains **no API key and no
+  prompt text**.
+
+---
+
+## V9.0 · 2026-09-21
+
+**Fix: the machine code was missing from Settings**
+
+- **⚙️ Settings → "🔑 Licence" showed a placeholder "…"** — no machine code, a copy
+  button that did nothing, and a blank licence status. If you needed your machine code
+  after changing computers, the only way was to delete the licence and let the activation
+  page reappear. It works now.
+- Cause: Settings is a modal, but the code that fills in the licence section was wired to
+  an entry point no user can reach, so it never ran in the shipped product.
+
+---
+
+## V8.9 · 2026-09-21
+
+**Overseas users can actually get in now**
+
+- **First launch picks Chinese or English from your system language.** It used to always
+  start in Chinese, and the language switch lives *inside* the app — so an overseas user
+  faced a full page of Chinese licence text with no switch anywhere in reach.
+- **Both the copyright page and the activation page now carry a 🌐 switch** in the
+  top-right, so you can change language before entering the app. Once you pick one
+  yourself, the system language never overrides it again.
+- The intro paragraph on the copyright page was hard-coded Chinese and did not follow the
+  language switch. It is now bilingual.
+- **Switching language no longer wipes the activation error message** — it is re-rendered
+  in the new language. That code in brackets is the only clue for diagnosing a failure.
+
+---
+
+## V8.8 · 2026-09-20
+
+**New default text model · 21:9 for video**
+
+- **Chat now defaults to `agnes-3.0-flash`** (free, latest generation, still reads images).
+  The previous `agnes-2.5-flash` is still in the ⚙️ Settings dropdown.
+- **New "Ultrawide 21:9" video ratio** (1680×720). Only `agnes-video-2.5-flash` has it;
+  switching to `agnes-video-v2.0` hides it and falls back to 16:9.
+- **`agnes-video-2.5-flash` is labelled "free for now"**, matching the provider's wording.
+- **"🎞️ Multi-image / audio" is now described per model**: on 2.5 it runs in reference
+  mode with **up to 5** reference images (one is enough) and 3 audio clips; on V2.0 it is
+  keyframe interpolation and still takes 2–3 images only. Both used to say "2–3 key frames".
+- **The "how to pick several images at once" hint now matches your device**: hold Ctrl on
+  a computer, long-press in the system picker on a phone. It used to say "hold Ctrl
+  (⌘ on Mac)" — a phone has neither key, and this product has no Mac build.
+
+---
+
+## V8.7 · 2026-09-12
+
+**Important: this version requires an activation code**
+
+Copies of this product were being resold on a second-hand marketplace, so this version adds
+per-device licence activation.
+
+- **On first launch the app shows this device's machine code** (like `W-7K2M-4XQ8-VD3N-PB9F`;
+  `W`=computer, `A`=phone). Two ways to activate: enter the **redemption code** from the seller
+  for one-click automatic activation, or send your machine code to the seller and paste back the
+  **activation code** they give you (use this one when you have no network).
+- **Once activated it works offline forever** and never asks again — only that one step needs a
+  connection.
+- **The machine code contains no hardware details**, no API key and no prompts — it is just a hash
+  of a device identifier, so it is safe to send. It is always available under ⚙️ Settings → Licence.
+- **Reinstalling the app, swapping a network card or plugging in a USB drive will not void it.**
+  Reinstalling the OS, a factory reset or a new device will, and needs a new code. Each redemption
+  code covers **2 free re-binds**, counted separately for computer and phone — using both does
+  **not** consume them.
+- Failures carry a **code in brackets**; send it along with your machine code: `E1` incomplete copy ·
+  `E2` invalid · `E3` issued for a different device · `E4` expired · `E5` cannot verify on this
+  machine (please use the official build).
+
+**Upgrading from an earlier version** (this version does not inherit an older licence):
+
+1. In the **old version**, open Settings → 💾 Backup & Restore and click "📤 Export all data";
+   keep the .zip
+2. Uninstall / delete the old version
+3. Install this version and activate it
+4. In the same place in the new version, click "📥 Import & restore" and pick that .zip
+
+Don't reorder those steps — deleting the old version first means the history and favourites are
+gone for good.
+
+## V8.6 · 2026-09-05
+
+**Changed**
+- **"🎬 Video" under a gallery image now feeds both modes at once**: it becomes the first frame for
+  image→video *and* joins the reference list for multi-image / audio. It used to do only the
+  former, so using the image in multi-image mode meant uploading it again — which 2.5 cannot even
+  accept, since it only takes public URLs. Images already in the list are not duplicated, and
+  nothing is pushed out once the model's per-generation cap is reached.
+- **A mismatch between a reference image and the selected aspect ratio is now called out.** The
+  clip is rendered at the ratio you pick, so a reference in another ratio gets cropped or
+  stretched. The controls now spell it out ("reference 16:9 · selected 9:16") and confirm when they
+  match. Covers image→video, multi-image reference and V2.0 keyframes.
+- **"Custom…" is removed from all three model dropdowns** (text / image / video). The official
+  models are fixed and free, and the custom entry mostly invited typos. **This supersedes the V8.5
+  note about picking "Custom…".** Anyone who had typed another provider's model keeps it: the saved
+  value appears in the dropdown as "(current setting)" and still works — it is never silently
+  rewritten.
+
+**Fixed**
+- A regression of our own: after switching to a 2.5 model, the reference-ratio note disappeared
+  entirely.
+- A message-formatting bug: when the same placeholder appeared twice in one sentence, only the
+  first was substituted and the second showed raw markers like `%a` to the user. A sweep of the
+  whole app found the same fault in the image rate-limit hint; both are fixed and a static check
+  now guards against the pattern.
+
+## V8.5 · 2026-09-05
+
+**Added / Changed**
+- **The default chat model is now `agnes-2.5-flash` (free).** The provider has **deprecated**
+  `agnes-2.0-flash`; 2.5 Flash upgrades coding, tool calling, multi-turn consistency and image
+  understanding while staying fully API-compatible.
+- **All three model fields are now dropdowns labelled "(free)"**: text, image and video model.
+  The official models are fixed and free, so the **"Fetch models" button was removed** — it
+  required a working key first and was an extra hurdle for new users. To use another provider's
+  model, pick "Custom…" in the dropdown and type it as before.
+- **The video model dropdown offers both generations directly**: `agnes-video-2.5-flash` and
+  `agnes-video-v2.0`, switchable from Settings or from the Video page, kept in sync.
+- **The in-app guide is updated** (both languages): the three video modes, switching models on the
+  page, the differences between the two generations, reference audio, the API diagnostics log, the
+  adjustable image timeout and prompt extraction.
+
+**Fixed**
+- An internal start-up error (video-model constants were read before they were defined). It never
+  surfaced as a visible error — it just silently interrupted initialisation, which is the hardest
+  kind to notice.
+
+## V8.4 · 2026-09-05
+
+**Added**
+- **Agnes Image 2.5 Flash is now the default** (the provider's latest generation, currently free).
+  It surpasses 2.1 Flash across the board while keeping identical parameters, size tiers and
+  pricing, so it is purely a model-name change. The image-model field now has a dropdown for
+  switching between generations. **Existing saved settings are untouched** — to upgrade, pick
+  `agnes-image-2.5-flash` in ⚙️ Settings → Image model.
+- **Quick model switcher on the Video page.** No need to open Settings: pick the model at the top
+  of the page and the controls immediately follow that model's rules (resolution, duration range,
+  frame rate, reference-image count, audio input).
+- **Reference audio for Agnes Video 2.5** (up to 3 clips). Switch to 2.5 and use the
+  "Multi-image / audio" mode to get the audio uploader; refer to clips as `<Audio 1>` in the prompt.
+- **The mobile menu button now says "Menu"** next to the ☰ icon and pulses once on first launch.
+  Users reported seeing only the icon and **assuming the app had just the chat page**.
+
+**Changed**
+- **"Keyframe" is merged into "Image→Video (first/last)".** The two entry points sent
+  **exactly the same request** — in both model generations — differing only in how many images you
+  supply. Now: a first frame alone animates it; adding a last frame makes it a first→last
+  transition. Four tabs become three.
+- The multi-image count hint now follows the model: Agnes Video 2.5 allows **5**, V2.0 still 2–3.
+  Previously it still said "2–3" after switching to 2.5.
+
+## V8.3 · 2026-09-05
+
+**Added**
+- **Support for Agnes Video 2.5 / 2.5 Flash** (currently free at the provider). Set the video
+  model to `agnes-video-2.5-flash` in ⚙️ Settings and the UI adapts to that generation's rules:
+  resolution locked to 720P, duration limited to 4–12s, the frame-rate control hidden (it has no
+  such parameter), and the spec line showing the real output size from the official table
+  (e.g. 9:16 → 720×1280).
+  > **The model ID has no letter "v"**: the new generation is `agnes-video-2.5-flash`; only the
+  > old V2.0 is `agnes-video-v2.0`. Getting it wrong returns "no available channel", and that
+  > error now tells you it is probably a typo.
+
+**Known limits (the provider's, not ours)**
+- **2.5 accepts reference images only as publicly reachable URLs.** A file picked from your own
+  computer has no URL, and whether that path works at all is unverified. Workarounds: generate
+  the image in the Image tab first (gallery images carry a URL) and pick it as the reference, or
+  switch the video model back to `agnes-video-v2.0`, which accepts local uploads. The UI explains
+  this when the related error occurs.
+- **2.5 has no negative prompt** (it is absent from the official parameter table), so it is no
+  longer sent for that model — sending it would only be silently ignored while looking effective.
+
+**Other**
+- The two generations' request formats are fully isolated: `agnes-video-v2.0` behaviour is unchanged.
+
+## V8.2 · 2026-08-26
+
+**Fixed**
+- **Image generation could hang on "Generating…" forever with no error.** When the service
+  is under load it may accept a request and then never respond, and image requests had
+  **no timeout at all** — so the spinner ran indefinitely, the button never reset, and
+  nothing was ever shown. There is now a 3-minute cap; on timeout you get a clear
+  "the server never responded" message plus a one-line report (time, endpoint, model,
+  symptom) you can forward straight to your API provider.
+- **Errors did not show the HTTP status code.** Previously you got a bare message with no
+  "500" to quote back to the provider. Every failure now carries the status, e.g.
+  "HTTP 500: …". When the server returns a web page instead of data (common with gateway
+  faults), you no longer see a meaningless "Unexpected token '<'" either.
+- **Generating several images at once discarded the successful ones if any single one hung.**
+  Successful images are now kept, and the failures are reported separately, e.g.
+  "Only 3 succeeded, 1 failed: request timed out".
+
+- **New "🩺 API diagnostics log" (in ⚙️ Settings).** Records the timing and outcome of the
+  last 100 image/video requests. When generation is slow or never finishes, hit "Copy
+  diagnostics" and send it to your API provider or the developer — it shows whether the wait
+  is on the server or here. It stores only time, endpoint host, model, elapsed time and HTTP
+  status — **never your API key or prompt text**.
+
+- **New "Image timeout (seconds)" setting** (⚙️ Settings → General; default 180, range 30–900).
+  When the provider is congested a request may legitimately queue for several minutes, and a
+  hard-wired 3-minute cap would mean "congested = can never generate". Raise it and retry if you
+  suspect it is just a long queue. (The separate "Timeout (seconds)" above applies to chat only.)
+
+> All three are about how the app behaves when the service misbehaves. **It cannot fix an
+> outage on the provider's side, but it can at least tell you what happened — and give you
+> something concrete to report.**
+
 ## V8.1 · 2026-08-24
 
 **Fixed**

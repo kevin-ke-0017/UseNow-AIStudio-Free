@@ -4,7 +4,8 @@
 
 > UseNow AI Studio · © Deming. All rights reserved.
 
-**Personal use is free forever** — including freelance and client work you get paid for. No licence needed.
+**Personal use requires an activation code** (one-time purchase, no expiry; one code activates 1 PC + 1 phone at the same time).
+Once you have it, whatever you earn with it — freelance, client work, content — is **yours: no revenue share, no per-project fee**.
 
 The cases below require a separate agreement.
 
