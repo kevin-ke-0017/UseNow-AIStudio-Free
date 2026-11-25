@@ -16,7 +16,7 @@
   <img src="https://img.shields.io/badge/platform-Windows%2010%2F11%20x64-2563eb?style=flat-square" alt="platform">
   <img src="https://img.shields.io/badge/Android-6.0%2B-3ddc84?style=flat-square" alt="android">
   <img src="https://img.shields.io/badge/install-portable%20single%20exe-16a34a?style=flat-square" alt="portable">
-  <img src="https://img.shields.io/badge/personal%20use-free-16a34a?style=flat-square" alt="free">
+  <img src="https://img.shields.io/badge/licence-one--time%20purchase-16a34a?style=flat-square" alt="licence">
   <img src="https://img.shields.io/badge/license-Proprietary-64748b?style=flat-square" alt="license">
 </p>
 
@@ -45,7 +45,7 @@ Chats, images and knowledge-base documents all live on your own computer. The ap
 
 The phone runs **the same application** — not a cut-down version, not a companion app.
 Identical UI, identical data format, identical API settings; paste the same API key and
-everything works: chat, image generation, video generation, local knowledge base, skills.
+everything works: chat, image generation, video generation, the short-drama studio, local knowledge base, skills.
 
 | | |
 |---|---|
@@ -71,11 +71,14 @@ targets follow the platform sizing guidelines.
 
 <table>
 <tr>
+<td colspan="2"><img src="docs/img/en/07-drama.jpg" alt="Short Drama"><p align="center"><b>🎞️ Short-drama studio</b><br><sub>Season bible → episode scripts → characters → storyboard frames → video → dubbing → one-click episode</sub></p></td>
+</tr>
+<tr>
 <td width="50%"><img src="docs/img/en/02-chat.jpg" alt="AI Chat"><p align="center"><b>💬 AI Chat</b><br><sub>Switch models · see thinking · compare answer versions</sub></p></td>
 <td width="50%"><img src="docs/img/en/03-image.jpg" alt="Image"><p align="center"><b>🎨 Image generation</b><br><sub>Prompt library · image-to-image · AI prompt polish</sub></p></td>
 </tr>
 <tr>
-<td width="50%"><img src="docs/img/en/04-video.jpg" alt="Video"><p align="center"><b>🎬 Video generation</b><br><sub>Text-to-video · image-to-video · multi-image · keyframes</sub></p></td>
+<td width="50%"><img src="docs/img/en/04-video.jpg" alt="Video"><p align="center"><b>🎬 Video generation</b><br><sub>Text-to-video · image-to-video (first / last frame) · multi-image / audio reference</sub></p></td>
 <td width="50%"><img src="docs/img/en/05-kb.jpg" alt="Knowledge Base"><p align="center"><b>📚 Local knowledge base</b><br><sub>PDF / Word / Markdown, searched entirely on-device</sub></p></td>
 </tr>
 <tr>
@@ -91,8 +94,10 @@ targets follow the platform sizing guidelines.
 | Feature | What you get |
 | --- | --- |
 | 💬 **AI Chat** | Switch models in one click; send images for vision; feed PDF/Word and let the AI read them; toggle thinking, web search and knowledge-base citation; **regenerating keeps the previous answer so you can compare**; export a whole conversation to HTML / PDF / long image |
-| 🎨 **Image generation** | Built-in prompt library (including several portrait presets); image-to-image; one-click AI prompt polish; 1:1 / 16:9 / 9:16 at 2K / 4K |
-| 🎬 **Video generation** | Text-to-video, image-to-video, multi-image and keyframe modes; set duration / aspect / frame rate; async generation with live progress |
+| 🎨 **Image generation** | Built-in prompt library (including several portrait presets); image-to-image and multi-image compositing; one-click AI prompt polish; aspect ratios and resolutions follow the selected model |
+| 🎬 **Video generation** | Text-to-video, image-to-video (first / last frame), multi-image / audio reference; duration and aspect follow the selected model; queueing and rate limits are waited out automatically, with live progress |
+| 🎞️ **Short-drama studio** | One drama is one season: an idea or an uploaded script / novel → season bible → episode outlines → each episode's script and storyboard; character face close-ups / turnarounds keep people consistent, several first-frame candidates to pick from; batch video generation that resumes without charging twice; character dubbing (pick or clone a voice); **compose an episode into one mp4 in one click** (optional burned-in subtitles), or export an asset pack for your editor |
+| 🧩 **Model center** | Text / image / video / dubbing models, one card per model (endpoint + key + where to get a key); templates for Agnes China / International, DeepSeek, Zhipu and more, or connect your own provider |
 | 📚 **Local knowledge base** | Import notes, manuals, PDF, Word; answers cite the source passages; **nothing ever leaves your machine** |
 | 🎭 **Skills** | Import skill packs (Claude Skill `.zip` format supported) to turn the AI into a domain expert; searchable, toggle on demand |
 | 🗂️ **Projects & history** | Group conversations by project, favorite them, search them, reopen them anytime |
@@ -148,7 +153,7 @@ The zip holds just three things: the app, a bilingual quick-start text file, and
 
 The app ships **no AI capacity of its own** — you bring your own provider key (the same way a browser ships no websites).
 
-Pick any provider: Agnes AI, DeepSeek, OpenAI, Gemini, Claude, Qwen, Zhipu GLM… **⚙️ Settings → Quick add** already has the endpoints and popular models preconfigured. Choose one, paste the key, done.
+Pick any provider: Agnes AI, DeepSeek, OpenAI, Gemini, Claude, Qwen, Zhipu GLM… **⚙️ Settings → Text models (likewise Image / Video / Dubbing) → ＋ Add from a template** already has popular providers' endpoints and models preconfigured. Click one to add it, paste the key, done.
 
 > New to this? Start with a provider that offers free credits, then decide where to spend money.
 
@@ -194,7 +199,7 @@ The app only sends requests to **the AI provider you configured yourself** — w
 <details>
 <summary><b>Does it cost anything?</b></summary>
 
-**The app is free for personal use** — no trial period, no crippled features, no ads.
+**The app is licensed per device with a one-time purchase** (activation code) — no subscription, no crippled features, no ads.
 
 What costs money is **your own API usage**, paid directly to your AI provider. I take no cut. It also means you **pay only for what you use**, which is usually far cheaper than a monthly subscription.
 </details>
@@ -216,9 +221,9 @@ certificate expires. That is not something to hand to ordinary users.
 <details>
 <summary><b>Why isn't it open source?</b></summary>
 
-This is a commercial product I built on my own time. It is **free to use, but not open source**.
+This is a commercial product I built on my own time. It is **a paid licence, and not open source**.
 
-You may download it, use it for free, and use it to make money with your own work. You may not resell it, redistribute it, or reverse-engineer it. Full terms in the [LICENSE](LICENSE).
+You may download it, activate it, and use it to make money with your own work. You may not resell it, redistribute it, or reverse-engineer it. Full terms in the [LICENSE](LICENSE).
 </details>
 
 <details>
@@ -257,7 +262,7 @@ This is proprietary software. © Deming. All rights reserved. Full terms in the 
 
 ## ☕ Support the project
 
-I build this alone and give it away for free. If it saved you time or a subscription fee, a coffee is very welcome — **entirely optional, every feature works either way**.
+I build this alone. If it saved you time or a subscription fee, a coffee is very welcome — **entirely optional, every feature works either way**.
 
 <p align="center">
   <a href="https://ko-fi.com/eldenkeebler"><img src="https://img.shields.io/badge/☕%20Ko--fi-buy%20me%20a%20coffee-ff5e5b?style=for-the-badge" alt="Ko-fi"></a>

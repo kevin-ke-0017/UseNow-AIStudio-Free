@@ -16,7 +16,7 @@
   <img src="https://img.shields.io/badge/platform-Windows%2010%2F11%20x64-2563eb?style=flat-square" alt="platform">
   <img src="https://img.shields.io/badge/Android-6.0%2B-3ddc84?style=flat-square" alt="android">
   <img src="https://img.shields.io/badge/安装-免安装单文件-16a34a?style=flat-square" alt="portable">
-  <img src="https://img.shields.io/badge/个人使用-免费-16a34a?style=flat-square" alt="free">
+  <img src="https://img.shields.io/badge/授权-一次买断-16a34a?style=flat-square" alt="licence">
   <img src="https://img.shields.io/badge/license-专有软件%20Proprietary-64748b?style=flat-square" alt="license">
 </p>
 
@@ -43,7 +43,7 @@
 
 ## 📱 安卓版已发布（V7.8）
 
-手机上跑的是**同一份程序**——不是精简版，也不是配套 App。界面、数据格式、API 设置与电脑版完全一致，同一个 API Key 直接填进去就能用：对话、AI 绘画、AI 视频、本地知识库、技能库，一样不少。
+手机上跑的是**同一份程序**——不是精简版，也不是配套 App。界面、数据格式、API 设置与电脑版完全一致，同一个 API Key 直接填进去就能用：对话、AI 绘画、AI 视频、短剧工作台、本地知识库、技能库，一样不少。
 
 | | |
 |---|---|
@@ -65,11 +65,14 @@
 
 <table>
 <tr>
+<td colspan="2"><img src="docs/img/07-drama.jpg" alt="短剧工作台"><p align="center"><b>🎞️ 短剧工作台</b><br><sub>整季设定 → 分集剧本 → 角色 → 分镜首帧 → 视频 → 配音 → 一键成片</sub></p></td>
+</tr>
+<tr>
 <td width="50%"><img src="docs/img/02-chat.jpg" alt="AI 对话"><p align="center"><b>💬 AI 对话</b><br><sub>多模型切换 · 思考过程 · 答案版本对比</sub></p></td>
 <td width="50%"><img src="docs/img/03-image.jpg" alt="图片生成"><p align="center"><b>🎨 图片生成</b><br><sub>提示词库 · 图生图 · AI 优化提示词</sub></p></td>
 </tr>
 <tr>
-<td width="50%"><img src="docs/img/04-video.jpg" alt="视频生成"><p align="center"><b>🎬 视频生成</b><br><sub>文生视频 · 图生视频 · 多图 / 关键帧</sub></p></td>
+<td width="50%"><img src="docs/img/04-video.jpg" alt="视频生成"><p align="center"><b>🎬 视频生成</b><br><sub>文生视频 · 图生视频（首尾帧）· 多图 / 音频参考</sub></p></td>
 <td width="50%"><img src="docs/img/05-kb.jpg" alt="本地知识库"><p align="center"><b>📚 本地知识库</b><br><sub>PDF / Word / Markdown 全在本机检索</sub></p></td>
 </tr>
 <tr>
@@ -85,8 +88,10 @@
 | 功能 | 说明 |
 | --- | --- |
 | 💬 **AI 对话** | 多模型一键切换；发图让 AI 识图；传 PDF / Word 让 AI 读；可开思考过程、联网搜索、知识库引用；**重新生成会保留旧答案供对比**；整段对话可导出 HTML / PDF / 长图 |
-| 🎨 **图片生成** | 内置提示词库（含多套人像大片预设）；支持图生图；一键 AI 优化提示词；1:1 / 16:9 / 9:16 与 2K / 4K |
-| 🎬 **视频生成** | 文生视频、图生视频、多图、关键帧四种玩法；可设时长 / 画幅 / 帧率；异步生成带进度 |
+| 🎨 **图片生成** | 内置提示词库（含多套人像大片预设）；支持图生图 / 多图合成；一键 AI 优化提示词；画幅和清晰度按所选模型提供 |
+| 🎬 **视频生成** | 文生视频、图生视频（首帧 / 尾帧）、多图 / 音频参考；时长和画幅随所选模型切换；排队、限流自动等待，异步生成带进度 |
+| 🎞️ **短剧工作台** | 一部剧就是一季：一句灵感或上传剧本 / 小说 → 整季设定 → 分集大纲 → 每集剧本与分镜；角色面部特写 / 三视图保持人物一致，首帧一次出多张挑；视频批量生成、断点续查不重复扣费；角色配音（选音色 / 复刻音色）；**一键把一集合成 mp4**（可烧录字幕），也能导出素材包进剪映 |
+| 🧩 **模型中心** | 文本 / 图片 / 视频 / 配音四类模型，一张卡片就是一个模型（地址 + Key + 申请 Key 的入口）；预置 Agnes 中国站 / 国际站、DeepSeek、智谱等模板，也能接自己的服务商 |
 | 📚 **本地知识库** | 导入笔记、手册、PDF、Word；提问时自动检索并引用原文；**全程不出本机** |
 | 🎭 **技能 Skill** | 导入技能包（支持 Claude Skill 格式的 .zip），把 AI 变成特定领域的专家；支持搜索、快捷启用 |
 | 🗂️ **项目 / 历史** | 对话按项目分组、可收藏、可搜索；历史记录随时找回 |
@@ -135,7 +140,7 @@
 
 软件本身**不含 AI 算力**，需要你自己的 AI 服务商 Key（就像浏览器不含网站内容一样）。
 
-任选一家：Agnes AI、DeepSeek、OpenAI、Gemini、Claude、通义千问、智谱 GLM……软件内的「⚙️ 设置 → 快捷添加」已经预置好了这些服务商的地址和常用模型，选一个、粘贴 Key 即可。
+任选一家：Agnes AI、DeepSeek、OpenAI、Gemini、Claude、通义千问、智谱 GLM……软件内「⚙️ 设置 → 文本模型（图片 / 视频 / 配音同理）→ ＋ 从模板添加」已经预置好了常用服务商的地址和模型，点一下加进列表、粘贴 Key 即可。
 
 > 新手建议先用**有免费额度**的服务商试水，跑通了再决定充值哪家。
 
@@ -186,7 +191,7 @@ Get-FileHash .\UseNowAIStudio-6.4.0-portable.exe -Algorithm SHA256
 <details>
 <summary><b>要花钱吗？</b></summary>
 
-**软件本身对个人用户免费**，无试用期、无功能阉割、无弹窗广告。
+**软件按设备授权、一次买断**（需要兑换码），无订阅、无功能阉割、无弹窗广告。
 
 花钱的部分是你自己的 **AI API 用量**——这笔钱你直接付给 AI 服务商，与本软件无关，我也拿不到任何分成。这也意味着：**用多少花多少**，通常比按月订阅便宜得多。
 </details>
@@ -204,9 +209,9 @@ Get-FileHash .\UseNowAIStudio-6.4.0-portable.exe -Algorithm SHA256
 <details>
 <summary><b>为什么不开源？</b></summary>
 
-这是我个人投入大量时间做的商业产品，**免费给个人用户使用，但不开放源码**。
+这是我个人投入大量时间做的商业产品，**付费授权使用，但不开放源码**。
 
-你可以免费下载、免费用、随便用它干活赚钱；但不能转卖、二次分发或逆向。完整条款见 [许可协议](LICENSE)。
+你可以下载、激活后随便用它干活赚钱；但不能转卖、二次分发或逆向。完整条款见 [许可协议](LICENSE)。
 </details>
 
 <details>
@@ -246,7 +251,7 @@ Get-FileHash .\UseNowAIStudio-6.4.0-portable.exe -Algorithm SHA256
 
 ## ☕ 支持作者
 
-这个软件是我一个人做的，免费给大家用。如果它帮你省了时间或省了订阅费，欢迎请我喝杯咖啡——**完全自愿，不打赏也一样能用全部功能**。
+这个软件是我一个人做的。如果它帮你省了时间或省了订阅费，欢迎请我喝杯咖啡——**完全自愿，不打赏也一样能用全部功能**。
 
 <p align="center">
   <a href="https://ko-fi.com/eldenkeebler"><img src="https://img.shields.io/badge/☕%20Ko--fi-请我喝杯咖啡-ff5e5b?style=for-the-badge" alt="Ko-fi"></a>

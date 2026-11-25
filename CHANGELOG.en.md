@@ -6,6 +6,294 @@ Only user-visible changes are listed. Download: **[Releases](../../releases/late
 
 ---
 
+## V10.12 · 2026-11-24
+
+**Fixed: on Android only Temperature could be changed in chat parameters**
+
+- Tapping “⚙️ Chat parameters” on a phone now lets you change all four settings (temperature, Max Tokens, streaming, thinking). The parameter bar scrolls sideways on phones, and it was clipping the popup so that only the temperature field showed.
+
+**Tidier phone layout**
+
+- The top bar no longer scrolls sideways: one row holds Menu / page name / language / theme / history / new chat. On the chat page the model picker and the Web, Knowledge base and Skills switches sit in a second row, with the switches shown as icons; other pages hide that row. The “Ready” strip only appears while something is generating.
+- Drama header: the drama picker and “＋ New” on the first row, and four equal small buttons — Rename / Export / Import / Delete — on the second, instead of five long buttons filling half the screen.
+- Options such as “First-frame candidates per click” and “Character references” keep the label and dropdown on one line with the note below, instead of squeezing the label into one character per line.
+- Asset-library filters stay on one row; a leftover last button in a group fills the whole row; the two reference captions on a character card line up.
+- Image / Video pages: “Generate” gets its own full row with the other three buttons side by side below — on phones they used to stack one per row. Video’s text / image / multi-image modes are now one segmented control.
+
+## V10.11 · 2026-11-24
+
+**New: upload first frames, turnarounds as an option, edit drama images on the Image page and back**
+
+- Every shot has “⬆ Upload frame” to use your own picture. Uploaded frames work like generated ones: they go into the asset library and become current, and the previous one is kept. You are warned if the picture’s shape is far from the project’s aspect ratio (the video may crop it or add bars).
+- New “Character references” option in the storyboard: **face close-ups** (default) or **turnarounds**. First frames and multi-image video both follow it, and a character missing that picture falls back to the other. In last version’s comparison an extra person appeared more often with turnarounds, so face close-ups stay the default; choosing turnarounds shows that warning — switch back if it happens, or state the head count in the shot description.
+- Drama → Image: first frames, character references and asset-library images have “✏️ Edit in Image”, which adds the picture as a reference on the Image page so you can describe the change and generate.
+- Image → Drama: every image in the Image gallery has “🎞️ Drama”: pick the project and where to put it — a shot’s first frame or a character’s face close-up / turnaround. Images sent over from a drama go back where they came from by default; the new one becomes current, the previous one stays in the asset library, and the app jumps to that shot.
+
+## V10.10.1 · 2026-11-24
+
+**Fixed: the lead could still appear twice in a first frame**
+
+- First frames now send **only the face close-up as a reference, not the turnaround**. A controlled test against the real Agnes API (same shot description, 3 images each): with turnarounds, all 3 images drew the lead twice; with face close-ups only, all 3 had exactly the people in the script, with consistent outfits. A turnaround shows the same person three times side by side and the model copies that — wording alone could not stop it.
+- Turnarounds are kept as outfit and build sheets to compare against in the asset library; a character without a face close-up still falls back to the turnaround.
+- The video “multi-reference” mode also sends face close-ups only.
+- **The full outfit comes from the continuity lock**: a second test (adding a floral headscarf, white side stripes, a black waist bag and black cloth shoes) showed that with face close-ups only, all 3 images got these details right — the model draws them from the lock words; adding a front full-body photo did not improve the outfit and again produced one image with an extra person. Script drafting now writes lock words item by item — hair, top, bottoms, shoes, accessories — and the character card’s field says the same.
+
+---
+
+## V10.10 · 2026-11-24
+
+**Drama: the first clip of a composed episode has sound again; cleaner subtitles; first frames without extra people or all-frontal poses**
+
+- **Fixed: the first clip of a composed episode had no original sound** (it played fine on its own). AAC audio starts with a short encoder priming, so the first decoded block has a negative timestamp (about -0.02 s) and that clip’s audio was dropped; only the first clip was hit because later clips start after 0. The negative part is now skipped correctly, and the diagnostics log records whether each shot’s audio made it in.
+- **Subtitles**: lines only by default, without the character’s name in front (tick “Speaker name before subtitles” if you want it; the SRT follows the same setting). The style is now white text with a thin outline and soft shadow, placed above the bottom buttons of Douyin / Kuaishou on vertical video.
+- **An extra person / the lead appearing twice**: first-frame requests now follow the Agnes image guide and say who each reference image is (face close-up or turnaround — the figures in a turnaround are one person), how many people are in the shot, and that each appears once.
+- **Everyone facing the camera**: first-frame prompts now follow “shot + framing + room for the camera move + head count + looks + style + requirements” and ask for profile, back, three-quarter or over-the-shoulder angles as the story needs instead of copying the references’ front-facing stance. Script drafting also writes each first-frame prompt as “position and facing → action starting and expression → foreground / background → camera angle → light → room for motion”, varying angles between shots. Regenerate the first frame of an existing shot to use the new prompts.
+
+---
+
+## V10.9 · 2026-11-22
+
+**Chat, Image, Video and Settings get the new layout too**
+
+- **Chat**: temperature, Max Tokens, streaming and 🧠 thinking now live under “⚙️ Chat settings” above the chat; the button shows the current values (e.g. “Temp 1 · Thinking: Default”) and opens when you want to change them. The row itself keeps only “📁 Projects” and “📤 Export”.
+- **Image / Video**: on wider desktop windows the page splits in two — settings on the left (fixed, scrolling on their own), results, gallery and prompt library on the right; narrow windows stack as before.
+- **Settings**: the ten sections are now a navigation list on the left, like WeChat’s settings, instead of two rows of pills.
+- Switching language now also switches the chat welcome message (it used to stay in the language the app started with).
+
+---
+
+## V10.8 · 2026-11-21
+
+**A calmer “workbench” look for the whole app; the drama page now uses tabs with the asset library pinned at the top**
+
+- **New palette**: modelled on office apps people use for hours a day, such as WeChat and WorkBuddy — neutral grey background, white cards, and the brand teal only on primary buttons, selection and focus. Almost every primary button used to be a glowing teal-to-pink gradient; now a group has at most one solid primary button.
+- **Light by default**: if you never switched themes you now get light mode; click ☀️ at the top right for dark, and that choice is remembered (dark mode uses the same calm palette).
+- **Consistent buttons**: two sizes with the same height, corners and type; buttons take their natural width instead of being squeezed onto two lines or stretched. Delete buttons are red text.
+- **Drama page**: tabs along the top — “① Season ② Episodes ③ Characters ④ Storyboard ⑤ Export” — each showing its progress; **🗂 Assets is pinned at the right end of the tab bar** (first on phones) with a count; aspect ratio, episode count and models moved to “⚙️ Project settings”.
+- **Character cards**: face close-up and turnaround side by side, each with its own Generate / Upload; every field is labelled.
+- **Storyboard cards**: the shot’s picture (first frame / video) on the left, the text on the right, like a real storyboard.
+- **Renamed**: “Generate look” is now “Generate turnaround” (that is what it makes — front / side / back — matching the thumbnail label); together they are the “character references (face close-up / turnaround)”.
+- A shorter, clearer welcome message in AI Chat.
+- Fixed: the version bar at the bottom no longer covers page content or the sidebar’s “Collapse”.
+
+---
+
+## V10.7.1 · 2026-11-21
+
+**“Compose episode” audio is now always AAC (accepted by common editors)**
+
+- The system AAC encoder is used when there is one; otherwise (on some computers and phones) the built-in FFmpeg AAC encoder component is used instead of falling back to Opus. Opus is used only if that component cannot load, and the message says so.
+- The component is licensed under the GNU LGPL v2.1. It is a separate, unmodified file (on desktop under `resources/lgpl/` in the program folder) that you may replace with your own build; its license texts, the FFmpeg version and the rebuild sources are in the same folder — see the third-party notices.
+- Clause 5 of the EULA now states what the LGPL requires: you may modify the software to replace that component and reverse-engineer it as needed to debug such modifications.
+
+---
+
+## V10.7 · 2026-11-21
+
+**Drama “Compose episode”: turn an episode’s shots into one mp4**
+
+- New **🎬 Compose episode** in “④ Preview & export”: joins this episode’s videos in order, made on your computer at no quota cost, saved as `drama-<title>-<episode>-<date>.mp4`.
+- “Dubbed later” shots drop the video’s own sound and use the dubbing; other shots keep their original sound. “Burn in subtitles” (on by default) writes the lines onto the picture.
+- Shots with no video yet, or whose link has expired, are filled with a labelled placeholder for the shot’s length and listed when it finishes — regenerate them and compose again.
+- Click the button again to cancel; it shows progress while composing.
+- Audio is AAC when available; without an AAC encoder it uses Opus and tells you so.
+- The compose component, Mediabunny (MPL-2.0), ships locally with the app; see the third-party notices.
+
+---
+
+## V10.6 · 2026-11-21
+
+**Drama dubbing: bind a dubbing voice to each character, dub line by line or a whole episode at once; Zhipu can clone a voice from a sample**
+
+- **New “🎙 Dubbing models” tab in Settings**: add Zhipu GLM-TTS (7 system voices, speed 0.5–2, voice cloning) or DeepSeek dubbing (2 voices) from a template. Like every other model it is one card, with the key and full request address on it.
+- **Voices belong to characters**: pick a dubbing voice and speed for each character and “▶ Preview” a sample line; every line that person speaks uses the same voice. Lines without a speaker use the “Narrator voice”. A character with no voice chosen is not synthesised, and you are told which one — so several people never end up with the same default voice.
+- **Voice cloning (Zhipu)**: upload a 3–30 s mp3 / wav (up to 10 MB) with only that person speaking on the character card; the cloned voice becomes the character’s voice, and other characters in the season can pick it too. The sample is stored in the project, travels with the project file and is deleted with the project.
+- **Generate dubbing**: “🎙 Dub this line” on a shot, or “🎙 Dub all lines in this episode” for every “Dubbed later” line at once — lines already dubbed and unchanged are skipped. After a line is edited its dubbing is marked “↻” as a reminder to redo it. Dubbing a “Spoken in the video” shot asks first and switches it to “Dubbed later”, so the video’s own voice and the dubbing don’t overlap.
+- Dubbing length is measured from the real audio; SRT subtitles follow it, and you are warned when it is longer than the shot.
+
+---
+
+## V10.5 · 2026-11-20
+
+**The short-drama workbench becomes “season → episodes”: a season bible first, then episode outlines, then scripts episode by episode**
+
+- **One drama is one season**: set “Planned episodes” (80 by default) and “Seconds per episode” (90 by default) when you create it; both can be changed.
+- **① Season bible**: from an idea, a short story, a novel or a finished multi-episode script, draft the logline, world, season arc and main characters; it is a draft until you adopt it, and existing characters are kept.
+- **② Episode outlines**: 10 episodes at a time, continuing from the outlines so far; each has an opening hook, a main conflict and a cliffhanger, and can be marked as a 💰 paywall point. “Rewrite episodes…” changes only those episodes and skips locked ones.
+- **③ This episode**: switch between episodes. Writing an episode sends the season bible, its outline, how the previous episode ended, how the next opens, and its source text; an episode summary is saved for the next episode to build on. “✅ Lock episode” protects its script and outline from being rewritten.
+- **Uploads are split by episode**: a finished script with “Episode N” headings (Chinese numerals such as 第三集 too) is split automatically and the planned episodes follow it, every line kept word for word; a novel is split into roughly equal parts by planned episodes, and each episode only gets its own part. Up to 400,000 characters (previously only the first 20,000 were used).
+- **“🧠 Let the model think first”** (on by default): models that support thinking, such as DeepSeek and Zhipu, think before planning the bible and outlines, with enough output budget and waiting time; the button shows “Planning… m:ss”. Writing an episode and splitting shots do not think.
+- Characters and the asset library are shared by the season; storyboard, preview and the asset pack are per episode. “Replace” on an episode script only replaces that episode’s shots and no longer clears the characters. The asset library gains a “This episode” filter and labels show the episode.
+- **Storage**: drama projects now live in the local media store (IndexedDB), so a season of dozens of episodes fits; existing projects move there the first time you open the app (the old copy is deleted only after reading back an identical copy) and become “one season, one episode” with nothing lost. “Export all” still includes them.
+- Project files use the season format (v2); older single-episode project files still import.
+
+---
+
+## V10.4.4 · 2026-11-20
+
+**Short drama: 4 first-frame candidates to choose from, a new asset library, click a video to play full screen, first frames while a video runs**
+
+- **First frames come as 4 candidates**: all candidates are listed under the shot — click to enlarge, “Use” to switch to one. Generating again adds new candidates and never replaces the one you picked. “First-frame candidates per click” in the storyboard sets 1–4 (each is one image request; choose 1 to save quota). “Fill in & generate” uses the same number.
+- **New 🗂 asset library**: every generated first frame, look (face / turnaround) and video is kept here — regenerating no longer deletes the old ones. Filter by frames / characters / videos, “Set as current” to switch back, ⬇ to download, 🗑 to delete; “Remove unused images” deletes every image no shot or character uses. Opening an older project registers the assets it currently uses.
+- **Click a video to play full screen**: short-drama videos (in shots and in the library) play full screen with one click; Esc or ✕ exits. No more hunting for the full-screen button in the small player.
+- **While a video is generating you can still make first frames for other shots and redo looks**: these buttons used to grey out as soon as a video started. Only videos have to run one at a time; images are independent requests.
+- When images arrive in the background the page refreshes; the field you are typing in and the cursor position are now kept.
+- Deleting a shot or character, or replacing with a new script, keeps generated images and videos in the asset library; deleting the whole drama deletes its library too.
+- Exported project files include every image in the asset library (videos as links), and importing restores them.
+
+---
+
+## V10.4.3 · 2026-11-20
+
+**New: the desktop app can move all its data off drive C**
+
+- ⚙️ Settings → “General” → “📁 Data location” shows where the data is and how large it is. “Change location…” lets you pick a folder on another drive (e.g. `D:\UseNow`); the app restarts and moves the image library, chat history, short-drama projects, settings and licence record during the restart. With a lot of data the window can take tens of seconds to appear — please do not open it again.
+- Every file is verified after copying; if verification fails the whole move is cancelled, the data stays where it was and nothing is deleted. Afterwards you are asked once whether to delete the old copy on drive C; “Keep for now” tells you where it is.
+- The licence moves with the data, so there is no need to activate again.
+- If the folder is on an external drive that is later missing (or the drive letter changed), the app stops and asks you to locate it, instead of starting with empty data or writing new data back to drive C.
+- “Back to default (drive C)” is always available.
+- Only one copy of the app can use the data at a time: double-clicking again brings the open window to the front.
+- At start-up the app asks the system for persistent storage, so the data is less likely to be evicted when the disk is nearly full.
+- Videos are still kept as online links and are not downloaded automatically; they are downloaded when you export the asset pack.
+- Not on the phone app (its data lives in the app's private storage).
+
+---
+
+## V10.4.2 · 2026-11-20
+
+**Fix: generating a script with DeepSeek (or Zhipu) failed with “returned only reasoning”**
+
+- **Cause**: DeepSeek and Zhipu GLM-4.7+ text models think by default, and the thinking counts toward the single-reply output budget. The script's budget was used up by thinking before any text was written. The old message told you to “switch to a non-reasoning model”, but DeepSeek has no separate non-reasoning model, so the advice itself was wrong.
+- **Now**: prompt enhancement, reverse prompt and script generation only need the answer, so thinking is turned off automatically for DeepSeek / Zhipu, and the script's output budget is larger. If a result is cut off for length, the app says so instead of a cryptic parse error.
+- **Chat page “🧠 Thinking → No thinking”**: it used to send nothing to DeepSeek / Zhipu, so they kept thinking. It now really turns thinking off. Agnes and other models are unaffected.
+- The DeepSeek template now uses the official current model name `deepseek-flash`; entries added earlier with `deepseek-v4-flash` keep working (DeepSeek serves the old name with the new model).
+
+---
+
+## V10.4.1 · 2026-11-19
+
+**Fix: reference mode stopped queuing partway. Short drama adds a script view, script upload, dialogue and voice settings**
+
+- **Fix**: in reference mode, queuing sometimes stopped with “No response within 60 s” and did not continue.
+  - Cause: Agnes reference mode usually queues far longer than first-frame mode. Measured with the same account at the same time, first-frame got a slot within a few tries while reference mode took over ten minutes. When the server is busy, even its “queue full” reply slows down and occasionally takes more than 60 s, and the old version stopped at the first timeout.
+  - Now: if one request gets no reply while queuing, free models treat it as busy and keep queuing. The diagnostics log records how many times this happened.
+  - Unchanged: a timeout on the very first submission, or with a model that may charge, still stops and asks you not to resubmit, so you are not charged twice.
+- When you pick reference mode on the video page, a note now says it queues longer; if you only need to fix the opening frame, “Image-to-video (first frame)” is faster.
+- **Short drama · lines in the video**: the line and the speaker go into the video prompt, so the video model speaks the line itself, lip-synced. Each shot has a line source: “Spoken in the video”, “Dubbed later / narration” (nobody speaks on screen) or “Silent”.
+- **Short drama · voice settings**: each character can have a voice description (e.g. “young woman, bright sweet tone”). It is added automatically to every line that character speaks, so the same person sounds more alike from shot to shot. This improves consistency but cannot guarantee identical voices.
+- **Short drama · two references**: each character now has a face close-up and a photorealistic turnaround; the turnaround no longer contains text labels, and both are used when drawing first frames. Replacing a reference after shots were generated asks you first, so earlier and later shots don’t end up looking like two different people.
+- **Short drama · review first frames before videos**: “Fill in & generate” now makes the batch of first frames first and stops so you can check each one and redo any you dislike. Click again to make the videos. You can turn this option off.
+- **Short drama · script**: “📖 View script” shows the script scene by scene, and you can copy or export it. The asset pack now also includes the script.
+- **Short drama · script upload**: upload a script or a novel (txt / md / docx / pdf). A finished script is split into shots with every line kept word for word; a novel or outline is adapted into a short drama by the AI. This version uses the first 20,000 characters; splitting a whole book into episodes comes in the next version.
+- **Short drama · other**:
+  - Click a look or first-frame thumbnail to see it full size.
+  - Too many image requests per minute now wait and retry automatically; verifying your identity on the provider’s platform raises the per-minute limit.
+  - Recording has been removed from Short drama. Lines can be spoken by the video model itself; for narration and off-screen voices, use “Import dubbing”.
+
+---
+
+## V10.4 · 2026-11-18
+
+**New “🎞️ Short Drama” workbench: script → character looks → storyboard frames → video → dubbing → asset pack**
+
+- **Script**: write a one-line idea or a passage of a story, and the AI drafts characters and a storyboard
+  (scene, characters, framing, camera move, length, first-frame prompt, video prompt, dialogue).
+  It is shown as a draft and only enters the project when you adopt it; you can replace the current content or append to it.
+- **Character looks**: each character gets a full-body, front-view look on a white background, or you can upload your own image.
+  The “continuity lock” words go verbatim into every shot the character appears in, so the character looks the same from shot to shot.
+- **Storyboard**: each shot can generate its own first frame and video. If a shot has a first frame, its video is made from it,
+  and the looks of the characters in the shot are attached as reference images.
+- **Checks before generating**: a length outside the video model’s range, a character that doesn’t exist, or a prompt over the limit
+  must be fixed before you can start. Dialogue that can’t be spoken in time, more than 3 characters on screen,
+  or a total far off the target length only produce a warning.
+- **Fill in & generate**: it first lists how many first frames and clips it will make and roughly how long that takes, and starts only after you confirm.
+  Shots run one at a time, finished ones are skipped, and you can stop at any time. An authentication failure on any shot stops the whole queue.
+- **Resume checking**: if you closed the app while shots were generating, “Continue checking” only checks their progress.
+  It never resubmits, so nothing is charged twice. Shots interrupted before a task ID came back are flagged so you can decide whether to redo them.
+- **Dubbing**: import an audio file or record one for each shot. The real length is shown, with a warning if it runs past the shot.
+  Cloud dubbing is planned for the next version.
+- **Preview & export**: play the whole drama through in order. Videos are the providers’ temporary links and expire, so export the asset pack when you are done.
+  It contains the clips, dubbing, first frames, looks, SRT subtitles and the storyboard (Markdown / CSV), numbered in order for your video editor.
+  Clips that can’t be downloaded from the web or mobile version are listed with their links in the pack’s README.
+- **Project file**: export the script, characters, first frames and dubbing as one file (no videos) to continue on another computer or share it.
+- The drama workbench and the video page share one generation channel. While a drama is generating, the video page can’t submit,
+  which avoids both of them running into rate limits at once.
+
+---
+
+## V10.3 · 2026-11-18
+
+**Zhipu’s free models: one each for chat, image and video**
+
+- “＋ Add from a template” now offers Zhipu’s three free models: chat **GLM-4.7-Flash**, image **CogView-3-Flash**
+  and video **CogVideoX-Flash**. Get one key at bigmodel.cn and enter it once per category.
+  “Free” on a card is per the provider’s current policy, with the date it was checked.
+- The page switches its options to match the model you pick:
+  - Zhipu image: the size list becomes the 7 sizes from its docs. It takes no reference images, so that field is hidden.
+  - Zhipu video: only text-to-video and image-to-video (first frame). The model decides the duration;
+    you can pick resolution, 30/60 fps, speed or quality first, and AI sound. Descriptions over 512 characters are flagged before submitting.
+- Zhipu’s chat endpoint cannot be called directly from a web page. The desktop app is unaffected; on Android the request
+  goes through the system’s native network layer, so the answer arrives all at once instead of word by word.
+- Video submission now times out after 60 s: if the server never replies, the button no longer stays on
+  “Submitting…”, and you are told the task may already have been accepted, so you don’t resubmit and get charged twice.
+  Video progress checks now time out after 30 s: if one check hangs, the next one still runs.
+- These three Zhipu models have not been run with a real key yet; the request formats follow the official docs field by field.
+  Please report any problems.
+
+---
+
+## V10.2.2 · 2026-11-18
+
+**Models in Settings are now “one card per model”; “Test” and “Query model list” fixed**
+
+- **Fixed: “Test” or “🔎 Query model list” on image / video models showed “fetchProviderModels is not defined”.**
+  The function was deleted by mistake during a V10.2 clean-up. It is back, and two checks now guard this kind of bug:
+  a build-time scan for names that are called but never defined, and a test that clicks every button in Settings.
+- **Every model is treated the same**: in the Text / Image / Video tabs each card is one model, showing its
+  label, model ID, base URL, **API key** and full request address — all editable, all deletable.
+  There is no separate key area any more, and no “built-in” vs “added by you” split.
+- **Keys for Gemini and other providers are back**: on upgrade, keys you entered before are put back on their own cards.
+- Every card has “🔑 Get key ↗”, which opens that provider’s create-key page.
+- Once you enter a key on one card, other cards in the same category with the same address and an empty key pick it up.
+- “＋ Add from a template”: Agnes (China / International site), DeepSeek, Gemini, OpenAI, Qwen, Zhipu and Claude in one click.
+- For image / video, “Test” only looks the model up in the model list; it does not generate anything.
+- “Reset settings” now refills the model list (it used to leave it empty).
+- If every model in a category has been deleted, “Generate” now tells you to add one from a template instead of showing an internal name.
+- The “Web search” settings tab no longer shows Chinese in the English UI.
+
+---
+
+## V10.2.1 · 2026-11-17
+
+**Correction: China-site and International-site keys are NOT interchangeable**
+
+- V10.2 said "one Agnes key works on both sites" — that was wrong, and the upgrade copied your old key to the other site, so models on that site failed authentication. Keys are now stored per site: the upgrade keeps your old key only on its original site and removes the auto-copied one; a different key you entered for the other site yourself is kept.
+- Every model entry in ⚙️ Settings now shows its **full request URL** (e.g. `POST https://api.agnes-ai.cn/v1/images/generations`) so you can compare it with the official docs.
+- Image sizes gain the **2:3, 3:2 and 21:9** aspect ratios from the official docs (1K–4K each).
+- Text-to-image now requests Base64 with `return_base64`, as the official docs specify (image-to-image still uses `extra_body.response_format`).
+
+---
+
+## V10.2 · 2026-11-17
+
+**Model center: pick the China or International site right in the dropdown, edit model IDs yourself**
+
+- **Agnes China site and International site are now two models side by side**: the model dropdowns on the chat, image and video pages each list both, and your pick is saved immediately.
+  The old "route" buttons (which only filled in the address and still needed Save) are gone. Tested: one Agnes key works on both sites.
+- **The image page has a new "Image model" dropdown**; the video page's dropdown now comes from the model center too.
+- **Settings is now tabbed**: Text models / Image models / Video models / Web search / Licence / Personalize / General / Diagnostics / Backup.
+  **Keys are entered per category** — use "Copy key" to reuse one from another category.
+- **Model IDs and Base URLs are editable**; "🔎 Query model list" fetches the provider's current models so you can switch to one — no software update needed when a vendor only renames a model.
+- **"➕ Add a model" asks for the request format** (e.g. "Same as Agnes Video 2.5"); video entries can set their own duration limit and aspect ratios, and the video page follows them.
+- **Model packs**: export / import model entries — **never any key** — safe to share.
+- **The retired agnes-video-v2.0 is removed** (it is gone from both sites' official model lists); if you had it selected you are moved to 2.5 Flash.
+  The previous `agnes-2.5-flash` / `agnes-image-2.1-flash` are no longer built in; if you had chosen them they are kept as your own entries and keep working.
+- Drawing from chat ("draw a …") now has a timeout and shows the HTTP status on errors, instead of spinning forever.
+
+> Old settings migrate automatically on upgrade (keys, custom models, DeepSeek, project default models and the model each conversation remembered).
+
+---
+
 ## V10.1 · 2026-09-22
 
 **Stated plainly: one redemption code = 1 computer and 1 phone at a time**

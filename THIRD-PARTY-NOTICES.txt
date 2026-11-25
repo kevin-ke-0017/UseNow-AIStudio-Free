@@ -22,6 +22,9 @@ only to those components and do not alter the proprietary license of this produc
 - highlight.js 11.9.0 ........... BSD-3-Clause .... (c) 2006-2023 Ivan Sagalaev and other contributors
 - mammoth.js 1.6.0 .............. BSD-2-Clause .... (c) 2013 Michael Williamson
 - pdf.js (pdfjs-dist 3.11.174) .. Apache-2.0 ...... (c) 2023 Mozilla Foundation and contributors
+- Mediabunny 1.66.2 ............ MPL-2.0 ......... (c) 2026-present Vanilagy and contributors
+- @mediabunny/aac-encoder 1.66.2  MPL-2.0 ......... (c) 2026-present Vanilagy and contributors
+- FFmpeg（AAC 编码器，WASM 构建） LGPL-2.1+ ....... (c) the FFmpeg developers
 - Electron 31.7.7 ............... MIT ............. (c) Electron contributors; (c) 2013-2020 GitHub Inc.
 - Chromium (随 Electron 分发) .... BSD-3-Clause 等 .. (c) The Chromium Authors
 - Node.js (随 Electron 分发) ...... MIT ............. (c) Node.js contributors; (c) Joyent, Inc.
@@ -139,6 +142,49 @@ incorporated here by reference. Key terms (summary, non-authoritative):
  - You must retain this NOTICE and the above copyright and license statements
    when redistributing.
  - The software is provided "AS IS", without warranties or conditions.
+
+============================================================================
+Mozilla Public License 2.0
+适用于 / Applies to: Mediabunny（短剧「一键成片」/ drama "Compose episode"）
+============================================================================
+
+This Source Code Form is subject to the terms of the Mozilla Public License,
+v. 2.0. If a copy of the MPL was not distributed with this file, You can
+obtain one at https://mozilla.org/MPL/2.0/.
+
+随附文件 libs/mediabunny.min.js 是 npm 包 mediabunny@1.66.2 的官方构建
+（dist/bundles/mediabunny.min.cjs），未作任何修改；许可证正本见同目录
+libs/mediabunny.LICENSE.txt。源码：https://github.com/Vanilagy/mediabunny
+The bundled libs/mediabunny.min.js is the unmodified official build of
+mediabunny@1.66.2 (dist/bundles/mediabunny.min.cjs); the full license text is
+in libs/mediabunny.LICENSE.txt. Source code: https://github.com/Vanilagy/mediabunny
+
+============================================================================
+GNU Lesser General Public License v2.1 (or later)
+适用于 / Applies to: FFmpeg（libavcodec / libavutil 的 AAC 编码器，随 @mediabunny/aac-encoder）
+============================================================================
+
+libs/mediabunny-aac-encoder.min.js 是 npm 包 @mediabunny/aac-encoder@1.66.2 的官方构建，
+未作修改，内含 FFmpeg AAC 编码器的 WASM 构建：
+  FFmpeg 提交 60a2818f76dcd1fee3155b1791304af104a0fc1b（n9.1-dev-2902-g60a2818f76d），未修改；
+  Emscripten 4.0.21；不含任何 GPL、LGPLv3 或 nonfree 组件。
+FFmpeg 以 GNU LGPL v2.1 或更高版本授权，许可证全文见 libs/FFmpeg.COPYING.LGPLv2.1.txt，
+FFmpeg 的许可说明见 libs/FFmpeg.LICENSE.md，本组件自身（MPL-2.0）见 libs/mediabunny-aac-encoder.LICENSE.txt。
+重新编译的步骤与桥接源码见 libs/mediabunny-aac-encoder-src/（README.md「Building and development」一节）；
+FFmpeg 源码：https://github.com/FFmpeg/FFmpeg/commit/60a2818f76dcd1fee3155b1791304af104a0fc1b
+这个组件是单独的一个文件，软件运行时才加载；您可以用自己修改或重新编译的版本替换它
+（电脑版是程序目录里的 resources/lgpl/mediabunny-aac-encoder.min.js，许可证和重新编译的源码也在那个文件夹里）。自本版本发布起三年内，
+任何人都可以通过下方邮箱索取上述 FFmpeg 版本的完整源码。
+
+libs/mediabunny-aac-encoder.min.js is the unmodified official build of
+@mediabunny/aac-encoder@1.66.2. It contains a WASM build of FFmpeg's AAC encoder:
+FFmpeg commit 60a2818f76dcd1fee3155b1791304af104a0fc1b (unmodified), Emscripten 4.0.21,
+with no GPL, LGPLv3 or nonfree components. FFmpeg is licensed under the GNU LGPL v2.1 or
+later; see libs/FFmpeg.COPYING.LGPLv2.1.txt and libs/FFmpeg.LICENSE.md. Rebuild steps and
+the bridge source are in libs/mediabunny-aac-encoder-src/. The component is a separate file
+loaded at run time, and you may replace it with your own modified or rebuilt version (on
+desktop it is resources/lgpl/mediabunny-aac-encoder.min.js, next to its licenses and rebuild sources). For three years from this
+release, anyone may request the complete corresponding FFmpeg source from the address below.
 
 ----------------------------------------------------------------------------
 如需任一组件的完整源码或完整许可证正本，可通过 kdm164747031@gmail.com 索取，
