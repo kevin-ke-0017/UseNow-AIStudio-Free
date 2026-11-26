@@ -6,6 +6,118 @@ Only user-visible changes are listed. Download: **[Releases](../../releases/late
 
 ---
 
+## V10.20 · 2026-11-26
+
+**Improved: first and last frames on the shot card, re-laid out**
+
+- Each shot shows “First frame → Last frame” side by side, and the arrow between them shows the shot’s length: the video moves from the first frame to the last over those seconds. Titles, pictures and buttons each share a row, so the two boxes always line up.
+- The buttons under each box act on that box only: “🖼 Generate first frame”, “🖼 Generate last frame”, Upload, ✏️ Edit in Image, ✕ Clear last frame; “⛓ Continue previous” sits in the first-frame box, because that is what it changes. Before, two rows of buttons sat at the bottom of the card and it was unclear which picture each one acted on.
+- The bottom of the card keeps only the shot-wide actions, with “Video” as the single primary button.
+
+**Improved: last frames come as several candidates too**
+
+- Like first frames, as many candidates as “First / last frame candidates per click” — pick one below the shot; generating again only adds candidates and keeps the one you picked.
+- The buttons are now “Generate first frame” / “Generate last frame”, without “×4”.
+- The “Use a last frame” checkbox is gone: with a last frame the video uses both frames, without one it uses the first frame only. To drop a last frame, press ✕ under it — “Fill in & generate” won’t make one for that shot again.
+
+## V10.19 · 2026-11-26
+
+**New: last frames (optional) — the video ends on a picture you chose**
+
+- Each shot’s picture area now has two boxes, “First frame | Last frame”. “🎨 Last frame” draws the closing picture from the shot’s first frame (same place, people and light); the video is made in first + last frame mode and ends on it. You can also upload your own or edit it on the Image page.
+- **Camera moves (push, pull, pan, track) need it most.** Tested with the real API: writing only “the camera slowly pushes in” failed to push in both times; with a pushed-in last frame it pushed in smoothly both times. So shots with a camera move have “Use a last frame” ticked by default, and the AI marks such shots when writing a script. Character actions (raising a camera to the eye) work from text alone, so not every shot needs one.
+- **The last frame is always drawn from the first frame, never on its own.** In tests an independently drawn one didn’t match, and the video suddenly jumped to another person and place midway. If the first frame changes, the last frame is marked for redrawing and the video won’t use it until then.
+- “Fill in & generate” makes last frames first and stops with the first frames for you to review before making videos.
+
+**Improved: continuing a shot now means “next first frame = previous last frame”**
+
+- Press “⛓ Continue from previous” on the later shot: its first frame becomes the previous shot’s last frame (the same picture, labelled with the shot it comes from); the previous video ends on it and this shot starts from it. If the previous shot has no last frame yet, one is drawn from its first frame.
+- It used to work the other way round: the previous video ended on the next shot’s **separately generated** first frame, whose background, light and details didn’t match, so the video jumped at the end.
+- If the previous last frame is redrawn, this first frame follows and both videos are flagged for regenerating. “⛓ Stop continuing” keeps the picture as the shot’s own first frame; moving shots stops the continuations involved.
+- Shots already continued in older projects are converted automatically — the same picture, and existing videos are unaffected.
+
+## V10.18 · 2026-11-26
+
+**Fixed: misaligned buttons on character cards, and a cropped turnaround thumbnail**
+
+- The note “✓ follows the face / Make the face first / The face changed” sat between the turnaround and its buttons — only in that column — pushing those buttons one row down. It now sits under the buttons, so both columns’ pictures and buttons line up (desktop and phone).
+- A turnaround is a wide image (front / side / back), but the card’s portrait frame only showed the middle, side view. The whole image now fits, so you can check all three views on the card.
+
+## V10.17 · 2026-11-26
+
+**Fixed: image-to-video and the drama’s “Fill in & generate” all failed (HTTP 400: keyframe mode cannot set aspect_ratio)**
+
+- The cause is on the server: from 2026-11-26 Agnes no longer accepts the aspect-ratio parameter for image-to-video (first frame / first + last frame) — the video **takes the first frame’s aspect ratio**. The same request worked the day before, and the parameter table in the official docs is unchanged.
+- Tested with the real API (same image, same prompt): with the aspect parameter → 400; without → accepted, and a 1:1 first frame gave a 720×720 video. Text-to-video and multi-image reference still send it and are unaffected.
+- Image-to-video no longer sends it. On the Video page the aspect dropdown is hidden in image-to-video and replaced by “the aspect follows the first frame: this one is 9:16, so the video will be 9:16”.
+- Drama: first frames are generated in the project’s aspect ratio, so nothing changes; **if you upload a first frame of a different ratio**, that shot’s video takes the image’s shape — the upload warning now says so.
+
+**Improved: the same error no longer repeats shot after shot**
+
+- “Fill in & generate” used to stop the whole queue only on authentication failures. Now also: the server names a parameter as wrong (it would be the same for every shot) → stop after the first shot; two shots in a row fail with exactly the same error → stop. A single failing shot (say, one that failed moderation) still lets the rest run.
+- The hint under an error now follows the parameter the server names, instead of always blaming “a local reference image” and suggesting the long-retired agnes-video-v2.0; stray `**` asterisks in the hint are gone.
+
+## V10.16 · 2026-11-26
+
+**Fixed: a character’s “face close-up” came out as a full-body picture**
+
+- Since V10.10.1 a character’s continuity lock lists the top, bottoms, shoes and accessories one by one (first frames draw the full outfit from it). The face close-up prompt carried the whole lock too — once it mentioned trousers and shoes, the image model pulled back to a full-body shot with a tiny face.
+- Tested with the real API: with the whole lock, 0 of 2 were close-ups; adding a “head and shoulders” instruction but keeping the lock, still 0 of 2; leaving out the bottoms, shoes, bags and waist (which a close-up should not show anyway — face, hair and top kept) gave **3 of 3 head-and-shoulder close-ups**, with the same mole in the same place.
+- The face close-up now uses only the face, hair and top, framed head and shoulders. The lock itself is unchanged, and first frames and video still use all of it.
+
+**New: the turnaround is drawn from the face close-up**
+
+- Make the face close-up first, then the turnaround: the turnaround uses that face as a reference picture, so it shows that person (tested: a facial mole landed in the right place in 2 of 3 images, against 1 of 3 in the wrong place without the reference; the turnaround layout was normal 3 of 3, with no extra large face).
+- Under the turnaround you see which face it follows: with no face close-up yet it says “Make the face first”; if you change the face later it says “The face changed”, and regenerating the turnaround matches it again. Setting the old face back as current in the asset library clears the note.
+- Turnarounds you upload, or put back from the Image page, are not tied to a face and never warn. With image models that take no reference pictures (such as Zhipu) the turnaround is still drawn from text only.
+
+**Tip**: characters created after V10.10.1 probably have a full-body “face close-up” — regenerate the face close-up first, then the turnaround. The old pictures stay in the asset library.
+
+## V10.15 · 2026-11-25
+
+**New: shot continuity — the end of one shot leads straight into the next**
+
+- For two shots of one continuous action, tick “⛓ Continue from the previous shot” on the later one. The earlier shot’s video is then generated in first + last frame mode: it starts from its own first frame and **ends on the next shot’s first frame**, so the cut is seamless.
+- Tested with the real API: given an empty living room as the first frame and “a man on the sofa looking at his phone” as the last frame, the 5-second video showed him walking in from the left and sitting down, and its final frame was nearly identical to the given one.
+- The earlier shot says whether it will connect, and what to do if it won’t:
+  - the next shot has no first frame yet: make it first (“Fill in & generate” does so automatically);
+  - the next shot’s first frame changed: regenerate the earlier video;
+  - the video model does not take a last frame (such as Zhipu): it cannot connect, and the pre-run check says so too.
+- When writing a script the AI marks which shots continue each other. The setting travels with the project file.
+- It does not need to download the video and grab its last frame (provider video links can’t be read by the page, which fails on phones), so it works on both the desktop and the phone.
+
+## V10.14 · 2026-11-25
+
+**New: scene (location) references keep one place consistent across shots**
+
+- The “③ Characters” tab is now “③ Cast & scenes”; scenes are in its lower half. Like characters, they are shared by the season, and each scene has:
+  - a **setting** description;
+  - a **scene continuity lock**: the fixed furnishings one by one, such as item, colour, where it sits, and the light;
+  - a **set picture**: “🎨 Generate” makes an empty set with no people, in the project’s aspect ratio — or upload one, or “✏️ Edit in Image”.
+- When the AI writes a script it now lists the scenes too, and shots use the same scene names. For existing storyboards, “Collect scenes from shots” turns every location named in the shots into a scene.
+- When a shot’s Scene field matches a scene name (or contains it — “Living room · night” counts as “Living room”), its first-frame and video prompts carry that lock automatically.
+- **Set pictures** (storyboard):
+  - **Automatic** (default): wide and medium shots get the set picture, close-ups only the lock;
+  - **Every shot**;
+  - **Lock text only**.
+- Why the default works this way: we ran a comparison with the real API, drawing one living room in three different shots.
+  - Naming only “living room” gave three different rooms.
+  - A detailed lock kept the key furnishings consistent and still followed close-up and high-angle framing.
+  - Adding the set picture made the room nearly identical, but the camera followed the picture — close-ups and high angles came out as its eye-level wide view.
+- Set pictures go into the asset library (new “Scenes” filter), travel with the project file, and get their own `scenes/` folder in the asset pack.
+
+## V10.13 · 2026-11-25
+
+**New: subtitle style for composed episodes**
+
+- The drama “Export” tab has a new “Subtitle style”: **size** (small / medium / large / extra large), **position** (lower / very bottom / middle / top), **colour** (white / yellow / light blue / pink) and **effect** (outline + shadow, or a translucent bar).
+- A live preview next to it draws the first shot’s first frame and first line at the episode’s real size — what you see is what gets composed.
+- The defaults match before (medium, lower, white, outline), so nothing changes unless you adjust it. The style is saved with the project and travels with the project file. Exported SRT files carry no style.
+
+**Fixed: some project options reset when importing a project file**
+
+- “Speaker name before subtitles”, “Burn in subtitles”, “Character references”, “First-frame candidates per click” and “Make first frames first” used to fall back to their defaults after importing a project on another computer. They now travel with the project file.
+
 ## V10.12 · 2026-11-24
 
 **Fixed: on Android only Temperature could be changed in chat parameters**
